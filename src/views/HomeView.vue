@@ -134,6 +134,7 @@ const hukouStationInfo = {
 
 const router = useRouter()
 const detailVisible = ref(false)
+const selectedIrrigationArea = ref('桃園管理處灌區')
 const expandedTables = ref(
   Object.fromEntries(hukouStationInfo.tabs.map((tab) => [tab.name, false])),
 )
@@ -176,7 +177,19 @@ const handleMapClick = (event) => {
       </div>
     </el-header>
 
-    <el-main class="content">
+    <el-main class="content home-content">
+      <div class="page-toolbar">
+        <div class="area-selector">
+          <span>灌區 :</span>
+          <el-select
+            v-model="selectedIrrigationArea"
+            class="area-select"
+            size="large"
+          >
+            <el-option label="桃園管理處灌區" value="桃園管理處灌區" />
+          </el-select>
+        </div>
+      </div>
       <section class="map-stage" aria-label="桃園管理處灌區 SVG 展示">
         <div class="map-canvas">
           <div
