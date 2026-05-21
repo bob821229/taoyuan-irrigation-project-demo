@@ -1,6 +1,17 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+const githubPagesBase = '/taoyuan-irrigation-project-demo/'
+
 export default defineConfig({
-  plugins: [vue()],
+  base: process.env.GITHUB_PAGES === 'true' ? githubPagesBase : '/',
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'ui-water-jar',
+        },
+      },
+    }),
+  ],
 })

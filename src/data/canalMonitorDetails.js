@@ -1,0 +1,38 @@
+export const canalMonitorDetails = [
+  {
+    id: 'ISTD003009001',
+    name: '光復圳前',
+    time: '115/05/15 16:00',
+    waterLevel: 0.8,
+    waterLevelUnit: 'm',
+    flow: 0.5,
+    flowUnit: 'cms',
+  },
+  {
+    id: 'ISTD003009002',
+    name: '光復圳圓井退水門',
+    time: '115/05/15 16:00',
+    waterLevel: 0.8,
+    waterLevelUnit: 'm',
+    flow: 0.5,
+    flowUnit: 'cms',
+  },
+  {
+    id: 'ISTD003009006',
+    name: '光復圳1支線取水後',
+    time: '115/05/15 16:00',
+    waterLevel: 0.8,
+    waterLevelUnit: 'm',
+    flow: 0.5,
+    flowUnit: 'cms',
+  },
+  {
+    id: 'ISTD003009005',
+    name: '光復圳1支線取水',
+    time: '115/05/15 16:00',
+    waterLevel: 0.8,
+    waterLevelUnit: 'm',
+    flow: 0.5,
+    flowUnit: 'cms',
+  },
+]

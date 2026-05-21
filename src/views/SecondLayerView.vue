@@ -1,19 +1,37 @@
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260519_01_第二層_湖口工作站灌區.svg?raw'
+import { fetchStationDetail } from '../api/stationDetailApi'
+import StationDetailDialog from '../components/StationDetailDialog.vue'
 
 const router = useRouter()
+const detailVisible = ref(false)
+const detailInfo = ref(null)
+
+const openDetail = async (id) => {
+  detailInfo.value = await fetchStationDetail(id)
+  detailVisible.value = true
+}
 
 const goToGuangfuLayer = () => {
   router.push({ name: 'guangfu-1' })
 }
 
-const handleMapClick = (event) => {
+const handleMapClick = async (event) => {
   const target = event.target instanceof Element ? event.target : null
+  const clickedTarget = target?.closest('#ISTD603009001_door, #ISTD603009001')
 
-  if (target?.closest('#ISTD603009001_door')) {
-    goToGuangfuLayer()
+  if (!clickedTarget) {
+    return
   }
+
+  if (clickedTarget.id === 'ISTD603009001_door') {
+    goToGuangfuLayer()
+    return
+  }
+
+  await openDetail('ISTD603009001')
 }
 </script>
 
@@ -40,4 +58,10 @@ const handleMapClick = (event) => {
       </section>
     </el-main>
   </el-container>
+  <StationDetailDialog
+    v-if="detailInfo"
+    v-model="detailVisible"
+    :info="detailInfo"
+  />
 </template>
+
