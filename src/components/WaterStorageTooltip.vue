@@ -40,8 +40,10 @@ const formatNumber = (value) => {
   return new Intl.NumberFormat('zh-TW').format(value)
 }
 
+const clampedPercent = computed(() => Math.min(100, Math.max(0, props.percent)))
+
 const percentTextClass = computed(() => ({
-  'is-low-water': props.percent < 50,
+  'is-low-water': clampedPercent.value < 50,
 }))
 </script>
 
@@ -55,12 +57,12 @@ const percentTextClass = computed(() => ({
     <div class="water-storage-jar-wrap">
       <ui-water-jar
         class="water-storage-jar"
-        :value="percent"
+        :value="clampedPercent"
         color="#48aeea"
         shape="circle"
-      />
+      ></ui-water-jar>
       <div class="water-storage-percent" :class="percentTextClass">
-        {{ percent }}%
+        {{ clampedPercent }}%
       </div>
     </div>
     <div class="water-storage-label">有效蓄水量</div>
