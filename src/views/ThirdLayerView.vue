@@ -26,7 +26,7 @@ const canalMonitorIds = [
   'ISTD003009006',
   'ISTD003009005',
 ]
-
+ 
 const detailVisible = ref(false)
 const detailInfo = ref(null)
 const waterStorageTooltip = ref({
