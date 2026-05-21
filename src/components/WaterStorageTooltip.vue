@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import WaterJar from './WaterJar.vue'
 
 const props = defineProps({
   visible: {
@@ -55,12 +56,12 @@ const percentTextClass = computed(() => ({
   >
     <div class="water-storage-title">{{ title }}</div>
     <div class="water-storage-jar-wrap">
-      <ui-water-jar
+      <WaterJar
         class="water-storage-jar"
         :value="clampedPercent"
         color="#48aeea"
         shape="circle"
-      ></ui-water-jar>
+      />
       <div class="water-storage-percent" :class="percentTextClass">
         {{ clampedPercent }}%
       </div>
