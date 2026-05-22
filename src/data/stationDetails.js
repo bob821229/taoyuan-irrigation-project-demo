@@ -138,7 +138,7 @@ export const stationDetails = [
       label: '基本資訊',
       expandLabel: '展開基本資訊表格',
       summary: [
-        { label: '灌區名稱：', value: '一支線' },
+        { label: '灌區名稱：', value: '光復圳1支線' },
         { label: '灌溉小組數：', value: '4', unit: '個' },
         { label: '灌溉面積：', value: '200.63', unit: '公頃' },
         { label: '直灌小組數：', value: '0', unit: '個' },
