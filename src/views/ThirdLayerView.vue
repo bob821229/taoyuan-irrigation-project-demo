@@ -177,9 +177,10 @@ const handleMapMouseMove = (event) => {
             :y="waterStorageTooltip.y"
             :title="waterStorageTooltip.data.title"
             :percent="waterStorageTooltip.data.percent"
-            :storage="waterStorageTooltip.data.storage"
+            :time="waterStorageTooltip.data.time"
             :max-storage="waterStorageTooltip.data.maxStorage"
             :unit="waterStorageTooltip.data.unit"
+            :storage="waterStorageTooltip.data.storage"
           />
           <CanalInfoTooltip
             v-if="canalInfoTooltip.data"

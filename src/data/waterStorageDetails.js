@@ -5,6 +5,7 @@ export const waterStorageDetails = [
     percent: 57,
     storage: 3.78,
     maxStorage: 6.67,
+    time: '115/05/15 16:00',
     unit: '萬噸',
   },
   {
@@ -13,6 +14,7 @@ export const waterStorageDetails = [
     percent: 26,
     storage: 2.56,
     maxStorage: 9.67,
+    time: '115/05/15 16:00',
     unit: '萬噸',
   },
   {
@@ -21,6 +23,7 @@ export const waterStorageDetails = [
     percent: 33,
     storage: 3.53,
     maxStorage: 10.56,
+    time: '115/05/15 16:00',
     unit: '萬噸',
   },
   {
@@ -29,6 +32,7 @@ export const waterStorageDetails = [
     percent: 38,
     storage: 4.22,
     maxStorage: 11.14,
+    time: '115/05/15 16:00',
     unit: '萬噸',
   },
 ]

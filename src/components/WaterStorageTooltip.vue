@@ -35,6 +35,10 @@ const props = defineProps({
     type: String,
     default: '萬噸',
   },
+  time:{
+    type: String,
+    required: true,
+  }
 })
 
 const formatNumber = (value) => {
@@ -65,6 +69,10 @@ const percentTextClass = computed(() => ({
       <div class="water-storage-percent" :class="percentTextClass">
         {{ clampedPercent }}%
       </div>
+    </div>
+    <div class="water-storage-label">時間</div>
+    <div class="water-storage-value">
+      {{ time }}
     </div>
     <div class="water-storage-label">有效蓄水量</div>
     <div class="water-storage-value">
