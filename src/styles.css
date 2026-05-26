@@ -110,71 +110,54 @@ h1 {
   height: 100%;
 }
 
-#ISTD303009001,
-#ISTD303009001_door,
-#ISTD603009001,
-#ISTD603009001_door,
-#ISTD403009001,
-#ISTD403009002,
-#ISTD403009003,
-#ISTD403009004,
-#ISTD003009024,
-#ISTD003009025,
-#ISTD003009026,
-#ISTD003009027,
-#ISTD003009001,
-#ISTD003009002,
-#ISTD003009006,
-#ISTD003009005 {
+.map-value-label {
+  position: absolute;
+  z-index: 11;
+  padding: 2px 6px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  border: 1px solid rgb(17 24 39 / 0.18);
+  border-radius: 2px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 0.14);
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+#stn_03009001_nav,
+#branch__03009001_nav,
+[id$="_info"],
+[id^="pound_"],
+[id^="sensor_"] {
   cursor: pointer;
   transition:
     filter 160ms ease,
     opacity 160ms ease;
 }
 
-#ISTD303009001:hover,
-#ISTD303009001_door:hover,
-#ISTD603009001:hover,
-#ISTD603009001_door:hover,
-#ISTD403009001:hover,
-#ISTD403009002:hover,
-#ISTD403009003:hover,
-#ISTD403009004:hover,
-#ISTD003009024:hover,
-#ISTD003009025:hover,
-#ISTD003009026:hover,
-#ISTD003009027:hover,
-#ISTD003009001:hover,
-#ISTD003009002:hover,
-#ISTD003009006:hover,
-#ISTD003009005:hover {
+#stn_03009001_nav:hover,
+#branch__03009001_nav:hover,
+[id$="_info"]:hover,
+[id^="pound_"]:hover,
+[id^="sensor_"]:hover {
   opacity: 0.97;
   filter:
     drop-shadow(0 0 2px #ffffff)
     drop-shadow(0 0 6px rgb(219 39 119 / 0.5));
 }
 
-#ISTD303009001_door:hover path,
-#ISTD303009001_door:hover polygon,
-#ISTD303009001_door:hover rect,
-#ISTD603009001:hover path,
-#ISTD603009001:hover polygon,
-#ISTD603009001:hover rect,
-#ISTD603009001_door:hover path,
-#ISTD603009001_door:hover polygon,
-#ISTD603009001_door:hover rect,
-#ISTD403009001:hover path,
-#ISTD403009001:hover polygon,
-#ISTD403009001:hover rect,
-#ISTD403009002:hover path,
-#ISTD403009002:hover polygon,
-#ISTD403009002:hover rect,
-#ISTD403009003:hover path,
-#ISTD403009003:hover polygon,
-#ISTD403009003:hover rect,
-#ISTD403009004:hover path,
-#ISTD403009004:hover polygon,
-#ISTD403009004:hover rect {
+#stn_03009001_nav:hover path,
+#stn_03009001_nav:hover polygon,
+#stn_03009001_nav:hover rect,
+#branch__03009001_nav:hover path,
+#branch__03009001_nav:hover polygon,
+#branch__03009001_nav:hover rect,
+[id$="_info"]:hover path,
+[id$="_info"]:hover polygon,
+[id$="_info"]:hover rect {
   stroke: #db2777;
   stroke-width: 1.25px;
   paint-order: stroke fill;
@@ -368,79 +351,52 @@ h1 {
 .water-storage-tooltip {
   position: absolute;
   z-index: 20;
-  width: 200px;
-  min-height: 272px;
-  padding: 18px 16px 16px;
+  min-width: 260px;
+  padding: 10px 13px;
   pointer-events: none;
   transform: translate(18px, -50%);
-  border: 1px solid #e5eef5;
-  border-radius: 2px;
+  border: 1px solid #dbe7ef;
+  border-radius: 4px;
   background: #ffffff;
   box-shadow: 0 8px 22px rgb(15 23 42 / 0.16);
-  text-align: center;
-}
-
-.water-storage-title {
-  color: #314054;
-  font-size: 22px;
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.water-storage-jar-wrap {
-  position: relative;
-  width: 118px;
-  height: 118px;
-  margin: 16px auto 22px;
-}
-
-.water-storage-jar {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.water-storage-percent {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
-.water-storage-percent.is-low-water {
-  color: #0074bd;
-}
-
-.water-storage-label {
-  color: #314054;
-  font-size: 20px;
-  line-height: 1.35;
-}
-
-.water-storage-value {
-  margin-top: 8px;
-  color: #0074bd;
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.water-storage-value span {
-  margin-left: 1px;
   color: #1f2933;
-  font-size: 15px;
+}
+
+.water-storage-tooltip dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.water-storage-tooltip div {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 8px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.water-storage-tooltip dt,
+.water-storage-tooltip dd {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.water-storage-tooltip dt {
+  color: #60746d;
   font-weight: 500;
+}
+
+.water-storage-tooltip dd {
+  color: #16362f;
+  font-weight: 700;
 }
 
 .canal-info-tooltip {
   position: absolute;
   z-index: 20;
-  min-width: 220px;
+  min-width: 260px;
   padding: 14px 16px;
   pointer-events: none;
   transform: translate(18px, -50%);
@@ -459,9 +415,10 @@ h1 {
 
 .canal-info-tooltip div {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-columns: max-content max-content;
   gap: 8px;
   align-items: baseline;
+  white-space: nowrap;
 }
 
 .canal-info-tooltip dt,

@@ -1,6 +1,6 @@
 export const canalMonitorDetails = [
   {
-    id: 'ISTD003009001',
+    id: 'sensor_03009001',
     name: '光復圳前',
     time: '115/05/15 16:00',
     waterLevel: 0.8,
@@ -9,7 +9,7 @@ export const canalMonitorDetails = [
     flowUnit: 'cms',
   },
   {
-    id: 'ISTD003009002',
+    id: 'sensor_03009002',
     name: '光復圳圓井退水門',
     time: '115/05/15 16:00',
     waterLevel: 0.8,
@@ -18,7 +18,7 @@ export const canalMonitorDetails = [
     flowUnit: 'cms',
   },
   {
-    id: 'ISTD003009006',
+    id: 'sensor_03009006',
     name: '光復圳1支線取水後',
     time: '115/05/15 16:00',
     waterLevel: 0.8,
@@ -27,7 +27,7 @@ export const canalMonitorDetails = [
     flowUnit: 'cms',
   },
   {
-    id: 'ISTD003009005',
+    id: 'sensor_03009005',
     name: '光復圳1支線取水',
     time: '115/05/15 16:00',
     waterLevel: 0.8,

@@ -1,13 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import irrigationSvg from '../../桃園管理處_湖口工作站_20260518_01_第一層_桃園管理處灌區.svg?raw'
+import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第一層_桃園管理處灌區-08.svg?raw'
 import { fetchStationDetail } from '../api/stationDetailApi'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
+import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const router = useRouter()
 const detailVisible = ref(false)
 const detailInfo = ref(null)
+const irrigationMapRef = ref(null)
 const selectedIrrigationArea = ref('桃園管理處灌區')
 
 const openDetail = async (id) => {
@@ -19,21 +21,28 @@ const goToHukouLayer = () => {
   router.push({ name: 'hukou' })
 }
 
+const getPayloadId = (id) => id.replace(/_(info|nav)$/, '')
+
 const handleMapClick = async (event) => {
   const target = event.target instanceof Element ? event.target : null
-  const clickedTarget = target?.closest('#ISTD303009001_door, #ISTD303009001')
+  const clickedTarget = target?.closest('#stn_03009001_nav, #stn_03009001_info')
 
   if (!clickedTarget) {
     return
   }
 
-  if (clickedTarget.id === 'ISTD303009001_door') {
+  if (clickedTarget.id === 'stn_03009001_nav') {
     goToHukouLayer()
     return
   }
 
-  await openDetail('ISTD303009001')
+  await openDetail(getPayloadId(clickedTarget.id))
 }
+
+onMounted(async () => {
+  await nextTick()
+  applySvgInfoTooltips(irrigationMapRef.value)
+})
 </script>
 
 <template>
@@ -61,6 +70,7 @@ const handleMapClick = async (event) => {
       <section class="map-stage" aria-label="桃園管理處灌區 SVG 展示">
         <div class="map-canvas home-map-canvas">
           <div
+            ref="irrigationMapRef"
             class="irrigation-map"
             role="img"
             aria-label="桃園管理處湖口工作站第一層桃園管理處灌區圖"
