@@ -110,6 +110,37 @@ h1 {
   height: 100%;
 }
 
+.svg-flow-overlay,
+.svg-flow-segment-layer {
+  pointer-events: none;
+}
+
+.svg-flow-segment {
+  fill: none !important;
+  stroke: #e8fdff;
+  stroke-width: 1.75px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 7 12;
+  animation: svg-river-flow var(--svg-flow-duration, 1.1s) linear infinite;
+  opacity: 0.78;
+  filter:
+    drop-shadow(0 0 1px rgb(255 255 255 / 0.65))
+    drop-shadow(0 0 2px rgb(52 175 213 / 0.35));
+}
+
+@keyframes svg-river-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svg-flow-segment {
+    animation: none;
+  }
+}
+
 .map-value-label {
   position: absolute;
   z-index: 11;
@@ -127,34 +158,25 @@ h1 {
   white-space: nowrap;
 }
 
-#stn_03009001_nav,
-#branch__03009001_nav,
-[id$="_info"],
-[id^="pound_"],
-[id^="sensor_"] {
+[id$="_nav"],
+[id$="_info"] {
   cursor: pointer;
   transition:
     filter 160ms ease,
     opacity 160ms ease;
 }
 
-#stn_03009001_nav:hover,
-#branch__03009001_nav:hover,
-[id$="_info"]:hover,
-[id^="pound_"]:hover,
-[id^="sensor_"]:hover {
+[id$="_nav"]:hover,
+[id$="_info"]:hover {
   opacity: 0.97;
   filter:
     drop-shadow(0 0 2px #ffffff)
     drop-shadow(0 0 6px rgb(219 39 119 / 0.5));
 }
 
-#stn_03009001_nav:hover path,
-#stn_03009001_nav:hover polygon,
-#stn_03009001_nav:hover rect,
-#branch__03009001_nav:hover path,
-#branch__03009001_nav:hover polygon,
-#branch__03009001_nav:hover rect,
+[id$="_nav"]:hover path,
+[id$="_nav"]:hover polygon,
+[id$="_nav"]:hover rect,
 [id$="_info"]:hover path,
 [id$="_info"]:hover polygon,
 [id$="_info"]:hover rect {
@@ -312,9 +334,14 @@ h1 {
 }
 
 .detail-table th {
+  border-right: 1px solid #d5dfdc;
   color: #365148;
   background: #f3f8f6;
   font-weight: 700;
+}
+
+.detail-table th:last-child {
+  border-right: 0;
 }
 
 .table-header-line {
@@ -338,14 +365,35 @@ h1 {
 }
 
 .crop-table {
-  min-width: 0;
-  font-size: 12px;
+  min-width: 1480px;
+  font-size: 14px;
   table-layout: fixed;
+}
+
+.crop-table .crop-col-index {
+  width: 58px;
+}
+
+.crop-table .crop-col-name {
+  width: 190px;
+}
+
+.crop-table .crop-col-area {
+  width: 92px;
+}
+
+.crop-table .crop-col-year {
+  width: 57px;
 }
 
 .crop-table th,
 .crop-table td {
-  padding: 7px 4px;
+  padding: 9px 8px;
+  white-space: nowrap;
+}
+
+.crop-table-wrap {
+  overflow-x: auto;
 }
 
 .water-storage-tooltip {

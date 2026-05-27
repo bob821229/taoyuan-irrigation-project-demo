@@ -7,7 +7,6 @@ export const waterStorageDetails = [
     maxStorage: 6.67,
     time: '115/05/15 16:00',
     unit: '萬噸',
-    cropStage: '收割期',
   },
   {
     id: 'pound_03009002',
@@ -17,7 +16,6 @@ export const waterStorageDetails = [
     maxStorage: 9.67,
     time: '115/05/15 16:00',
     unit: '萬噸',
-    cropStage: '本田期',
   },
   {
     id: 'pound_03009003',
@@ -27,7 +25,6 @@ export const waterStorageDetails = [
     maxStorage: 10.56,
     time: '115/05/15 16:00',
     unit: '萬噸',
-    cropStage: '抽穗期',
   },
   {
     id: 'pound_03009004',
@@ -37,6 +34,5 @@ export const waterStorageDetails = [
     maxStorage: 11.14,
     time: '115/05/15 16:00',
     unit: '萬噸',
-    cropStage: '整田插秧期',
   },
 ]

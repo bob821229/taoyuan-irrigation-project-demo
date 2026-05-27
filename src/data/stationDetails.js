@@ -1,1048 +1,294 @@
-const yearColumns = ['111', '112', '113', '114', '115']
+const cropYears = ['111', '112', '113', '114', '115']
+const emptyYearValues = ['...', '...', '...', '...', '...']
+
+const createCropRow = (
+  no,
+  name,
+  floodedArea,
+  researchFirstSeason = emptyYearValues,
+  researchSecondSeason = emptyYearValues,
+  agencyFirstSeason = emptyYearValues,
+  agencySecondSeason = emptyYearValues,
+) => ({
+  no,
+  name,
+  floodedArea,
+  researchFirstSeason,
+  researchSecondSeason,
+  agencyFirstSeason,
+  agencySecondSeason,
+})
 
 export const stationDetails = [
-{
-  id: 'stn_03009001',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '湖口站' },
-        { label: '灌溉小組數：', value: '53', unit: '個' },
-        { label: '灌溉面積：', value: '3,621', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '78.86', '否'],
-            ['2', '光復圳1-2號池塘小組', '33.31', '否'],
-            ['3', '光復圳1-3號池塘小組', '35.05', '否'],
-            ['4', '光復圳1-4號池塘小組', '53.41', '否'],
-            ['...', '...', '...', '...'],
-            ['53', '...', '...', '...'],
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '65', unit: '口' },
-        { label: '總最大蓄水量：', value: '911', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '236', unit: '萬噸' },
-        { label: '總蓄水率：', value: '26', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池', '6.67', '3.78', '57'],
-            ['2', '光復圳1-2號池', '9.67', '2.56', '26'],
-            ['3', '光復圳1-3號池', '10.56', '3.53', '33'],
-            ['4', '光復圳1-4號池', '11.14', '4.22', '38'],
-            ['...', '...', '...', '...', '...'],
-            ['65', '...', '...', '...', '...'],
-          ],
-        },
+  {
+    id: 'stn_03009001',
+    name: '湖口站',
+    irrigationGroupCount: 53,
+    irrigationArea: 3621,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-1號池塘小組', irrigationArea: 78.86, isDirectIrrigation: false },
+      { no: 2, name: '光復圳1-2號池塘小組', irrigationArea: 33.31, isDirectIrrigation: false },
+      { no: 3, name: '光復圳1-3號池塘小組', irrigationArea: 35.05, isDirectIrrigation: false },
+      { no: 4, name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false },
+      { no: '...', name: '...', irrigationArea: '...', isDirectIrrigation: null },
+      { no: 53, name: '...', irrigationArea: '...', isDirectIrrigation: null },
+    ],
+    pondCount: 65,
+    maxStorage: 911,
+    effectiveStorage: 236,
+    storageRate: 26,
+    ponds: [
+      { no: 1, name: '光復圳1-1號池', maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57 },
+      { no: 2, name: '光復圳1-2號池', maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26 },
+      { no: 3, name: '光復圳1-3號池', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33 },
+      { no: 4, name: '光復圳1-4號池', maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38 },
+      { no: '...', name: '...', maxStorage: '...', effectiveStorage: '...', storageRate: '...' },
+      { no: 65, name: '...', maxStorage: '...', effectiveStorage: '...', storageRate: '...' },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 2878,
+      researchAverage: { firstSeason: 1372, secondSeason: 1027 },
+      agencyAverage: { firstSeason: 1054, secondSeason: 1372 },
+      years: cropYears,
+      rows: [
+        createCropRow(1, '光復圳1-1號池塘小組', 20),
+        createCropRow(2, '光復圳1-2號池塘小組', 18),
+        createCropRow(3, '光復圳1-3號池塘小組', 15),
+        createCropRow(4, '光復圳1-4號池塘小組', 33),
+        createCropRow('...', '...', '...'),
+        createCropRow(53, '...', '...'),
       ],
     },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '2,878', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 1,372', unit: '公頃' },
-            { value: '二期作 1,027', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 1,054', unit: '公頃' },
-            { value: '二期作 1,372', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '20', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['2', '光復圳1-2號池塘小組', '18', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['3', '光復圳1-3號池塘小組', '15', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['4', '光復圳1-4號池塘小組', '33', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['53', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-          ],
-        },
+  },
+  {
+    id: 'branch__03009001',
+    name: '光復圳1支線',
+    irrigationGroupCount: 4,
+    irrigationArea: 200.63,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-1號池塘小組', irrigationArea: 78.86, isDirectIrrigation: false },
+      { no: 2, name: '光復圳1-2號池塘小組', irrigationArea: 33.31, isDirectIrrigation: false },
+      { no: 3, name: '光復圳1-3號池塘小組', irrigationArea: 35.05, isDirectIrrigation: false },
+      { no: 4, name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false },
+    ],
+    pondCount: 4,
+    maxStorage: 38.04,
+    effectiveStorage: 14.09,
+    storageRate: 37,
+    ponds: [
+      { no: 1, name: '光復圳1-1號池', maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57 },
+      { no: 2, name: '光復圳1-2號池', maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26 },
+      { no: 3, name: '光復圳1-3號池', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33 },
+      { no: 4, name: '光復圳1-4號池', maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 287,
+      researchAverage: { firstSeason: 137, secondSeason: 102 },
+      agencyAverage: { firstSeason: 105, secondSeason: 137 },
+      years: cropYears,
+      rows: [
+        createCropRow(1, '光復圳1-1號池塘小組', 20),
+        createCropRow(2, '光復圳1-2號池塘小組', 18),
+        createCropRow(3, '光復圳1-3號池塘小組', 15),
+        createCropRow(4, '光復圳1-4號池塘小組', 33),
       ],
     },
-  ],
-},
-{
-  id: 'branch__03009001',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1支線' },
-        { label: '灌溉小組數：', value: '4', unit: '個' },
-        { label: '灌溉面積：', value: '200.63', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '78.86', '否'],
-            ['2', '光復圳1-2號池塘小組', '33.31', '否'],
-            ['3', '光復圳1-3號池塘小組', '35.05', '否'],
-            ['4', '光復圳1-4號池塘小組', '53.41', '否']
-          ],
-        },
+  },
+  {
+    id: 'grp_03009001',
+    name: '光復圳1-1號池小組',
+    cropStage: '收割期',
+    irrigationGroupCount: 1,
+    irrigationArea: 78.86,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-1號池塘小組', irrigationArea: 78.86, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 6.67,
+    effectiveStorage: 3.78,
+    storageRate: 57,
+    ponds: [
+      { no: 1, name: '光復圳1-1號池', maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 20,
+      researchAverage: { firstSeason: 15, secondSeason: 5 },
+      agencyAverage: { firstSeason: 15, secondSeason: 5 },
+      years: cropYears,
+      rows: [createCropRow(1, '光復圳1-1號池塘小組', 20)],
+    },
+  },
+  {
+    id: 'grp_03009002',
+    cropStage: '本田期',
+    name: '光復圳1-2號池小組',
+    irrigationGroupCount: 1,
+    irrigationArea: 33.31,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 2, name: '光復圳1-2號池塘小組', irrigationArea: 33.31, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 9.67,
+    effectiveStorage: 2.56,
+    storageRate: 26,
+    ponds: [
+      { no: 2, name: '光復圳1-2號池', maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 18,
+      researchAverage: { firstSeason: 9, secondSeason: 9 },
+      agencyAverage: { firstSeason: 9, secondSeason: 9 },
+      years: cropYears,
+      rows: [createCropRow(2, '光復圳1-2號池塘小組', 18)],
+    },
+  },
+  {
+    id: 'grp_03009003',
+    cropStage: '抽穗期',
+    name: '光復圳1-3號池小組',
+    irrigationGroupCount: 1,
+    irrigationArea: 35.05,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 3, name: '光復圳1-3號池塘小組', irrigationArea: 35.05, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 10.56,
+    effectiveStorage: 3.53,
+    storageRate: 33,
+    ponds: [
+      { no: 3, name: '光復圳1-3號池', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 35.05,
+      researchAverage: { firstSeason: 15.05, secondSeason: 20 },
+      agencyAverage: { firstSeason: 15.05, secondSeason: 20 },
+      years: cropYears,
+      rows: [createCropRow(3, '光復圳1-3號池塘小組', 15)],
+    },
+  },
+  {
+    id: 'grp_03009004',
+    name: '光復圳1-4號池小組',
+    cropStage: '整田插秧期',
+    irrigationGroupCount: 1,
+    irrigationArea: 53.41,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 4, name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 11.14,
+    effectiveStorage: 4.22,
+    storageRate: 38,
+    ponds: [
+      { no: 4, name: '光復圳1-4號池', maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 53.41,
+      researchAverage: { firstSeason: 23, secondSeason: 30.41 },
+      agencyAverage: { firstSeason: 23, secondSeason: 30.41 },
+      years: cropYears,
+      rows: [createCropRow(4, '光復圳1-4號池塘小組', 53.41)],
+    },
+  },
+  {
+    id: 'weir_03009002',
+    name: '光復圳1-社子溪02號河水堰',
+    irrigationGroupCount: 2,
+    irrigationArea: 68.36,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-2號池塘小組', irrigationArea: 33.31, isDirectIrrigation: false },
+      { no: 2, name: '光復圳1-3號池塘小組', irrigationArea: 35.05, isDirectIrrigation: false },
+    ],
+    pondCount: 2,
+    maxStorage: 20,
+    effectiveStorage: 6,
+    storageRate: 30,
+    ponds: [
+      { no: 1, name: '光復圳1-2號池', maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26 },
+      { no: 2, name: '光復圳1-3號池', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 48,
+      researchAverage: { firstSeason: 33, secondSeason: 24 },
+      agencyAverage: { firstSeason: 56, secondSeason: 22 },
+      years: cropYears,
+      rows: [
+        createCropRow(1, '光復圳1-3號池塘小組', 15),
+        createCropRow(2, '光復圳1-4號池塘小組', 33),
       ],
     },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '4', unit: '口' },
-        { label: '總最大蓄水量：', value: '38.04', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '14.09', unit: '萬噸' },
-        { label: '總蓄水率：', value: '37', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池', '6.67', '3.78', '57'],
-            ['2', '光復圳1-2號池', '9.67', '2.56', '26'],
-            ['3', '光復圳1-3號池', '10.56', '3.53', '33'],
-            ['4', '光復圳1-4號池', '11.14', '4.22', '38'],
-          ],
-        },
-      ],
+  },
+  {
+    id: 'weir_03009003',
+    name: '社子溪03號河水堰',
+    irrigationGroupCount: 1,
+    irrigationArea: 35.05,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-3號池塘小組', irrigationArea: 35.05, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 10.56,
+    effectiveStorage: 3.53,
+    storageRate: 33,
+    ponds: [
+      { no: 1, name: '光復圳1-3號池', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 15,
+      researchAverage: { firstSeason: 8, secondSeason: 7 },
+      agencyAverage: { firstSeason: 6, secondSeason: 5 },
+      years: cropYears,
+      rows: [createCropRow(1, '光復圳1-3號池塘小組', 15)],
     },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '287', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 137', unit: '公頃' },
-            { value: '二期作 102', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 105', unit: '公頃' },
-            { value: '二期作 137', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '20', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['2', '光復圳1-2號池塘小組', '18', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['3', '光復圳1-3號池塘小組', '15', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...'],
-            ['4', '光復圳1-4號池塘小組', '33', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
+  },
+  {
+    id: 'weir_03009004',
+    name: '社子溪04號河水堰',
+    irrigationGroupCount: 1,
+    irrigationArea: 53.41,
+    directIrrigationGroupCount: 0,
+    directIrrigationArea: 0,
+    groups: [
+      { no: 1, name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false },
+    ],
+    pondCount: 1,
+    maxStorage: 11,
+    effectiveStorage: 4,
+    storageRate: 38,
+    ponds: [
+      { no: 1, name: '光復圳1-4號池', maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38 },
+    ],
+    crop: {
+      floodedAreaDate: '115/3/5',
+      recentFloodedArea: 33,
+      researchAverage: { firstSeason: 28, secondSeason: 24 },
+      agencyAverage: { firstSeason: 15, secondSeason: 10 },
+      years: cropYears,
+      rows: [createCropRow(1, '光復圳1-4號池塘小組', 33)],
     },
-  ],
-},
-{
-  id: 'grp_03009001',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1-1號池小組' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '78.86', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '78.86', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '6.67', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '3.78', unit: '萬噸' },
-        { label: '總蓄水率：', value: '57', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池', '6.67', '3.78', '57']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '20', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 15', unit: '公頃' },
-            { value: '二期作 5', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 15', unit: '公頃' },
-            { value: '二期作 5', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-1號池塘小組', '20', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'grp_03009002',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1-2號池小組' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '33.31', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['2', '光復圳1-2號池塘小組', '33.31', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '9.67', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '2.56', unit: '萬噸' },
-        { label: '總蓄水率：', value: '26', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['2', '光復圳1-2號池', '9.67', '2.56', '26']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '18', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 9', unit: '公頃' },
-            { value: '二期作 9', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 9', unit: '公頃' },
-            { value: '二期作 9', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['2', '光復圳1-2號池塘小組', '18', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'grp_03009003',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1-3號池小組' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '35.05', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['3', '光復圳1-3號池塘小組', '35.05', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '10.56', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '3.53', unit: '萬噸' },
-        { label: '總蓄水率：', value: '33', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['3', '光復圳1-3號池', '10.56', '3.53', '33']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '35.05', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 15.05', unit: '公頃' },
-            { value: '二期作 20', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 15.05', unit: '公頃' },
-            { value: '二期作 20', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['3', '光復圳1-3號池塘小組', '15', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'grp_03009004',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1-4號池小組' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '53.41', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['4', '光復圳1-4號池塘小組', '53.41', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '11.14', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '4.22', unit: '萬噸' },
-        { label: '總蓄水率：', value: '38', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['4', '光復圳1-4號池', '11.14', '4.22', '38'],
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '53.41', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 23', unit: '公頃' },
-            { value: '二期作 30.41', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 23', unit: '公頃' },
-            { value: '二期作 30.41', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['4', '光復圳1-4號池塘小組', '53.41', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'weir_03009002',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '光復圳1-社子溪02號河水堰' },
-        { label: '灌溉小組數：', value: '2', unit: '個' },
-        { label: '灌溉面積：', value: '68.36', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-2號池塘小組', '33.31', '否']
-            ['2', '光復圳1-3號池塘小組', '35.05', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '2', unit: '口' },
-        { label: '總最大蓄水量：', value: '20', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '6', unit: '萬噸' },
-        { label: '總蓄水率：', value: '30', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-2號池', '9.67', '2.56', '26'],
-            ['2', '光復圳1-3號池', '10.56', '3.53', '33'],
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '48', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 33', unit: '公頃' },
-            { value: '二期作 24', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 56', unit: '公頃' },
-            { value: '二期作 22', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-3號池塘小組', '15', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-            ['2', '光復圳1-4號池塘小組', '33', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'weir_03009003',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '社子溪03號河水堰' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '35.05', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-3號池塘小組', '35.05', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '10.56', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '3.53', unit: '萬噸' },
-        { label: '總蓄水率：', value: '33', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-3號池', '10.56', '3.53', '33'],
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '15', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 8', unit: '公頃' },
-            { value: '二期作 7', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 6', unit: '公頃' },
-            { value: '二期作 5', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-3號池塘小組', '15', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
-{
-  id: 'weir_03009004',
-  dialogTitle: '詳細資料',
-  tabs: [
-    {
-      name: 'basic',
-      label: '基本資訊',
-      expandLabel: '展開基本資訊表格',
-      summary: [
-        { label: '灌區名稱：', value: '社子溪04號河水堰' },
-        { label: '灌溉小組數：', value: '1', unit: '個' },
-        { label: '灌溉面積：', value: '53.41', unit: '公頃' },
-        { label: '直灌小組數：', value: '0', unit: '個' },
-        { label: '直灌面積：', value: '0', unit: '公頃' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '灌溉面積(公頃)' },
-              { label: '是否為直灌區' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-4號池塘小組', '53.41', '否']
-          ],
-        },
-      ],
-    },
-    {
-      name: 'pond',
-      label: '埤塘資訊',
-      expandLabel: '展開埤塘資訊表格',
-      summary: [
-        { label: '埤塘數量：', value: '1', unit: '口' },
-        { label: '總最大蓄水量：', value: '11', unit: '萬噸' },
-        { label: '總有效蓄水量：', value: '4', unit: '萬噸' },
-        { label: '總蓄水率：', value: '38', unit: '%' },
-      ],
-      tables: [
-        {
-          headerRows: [
-            [
-              { label: '序號' },
-              { label: '名稱' },
-              { label: '最大蓄水量(萬噸)' },
-              { label: '有效蓄水量(萬噸)' },
-              { label: '蓄水率(%)' },
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-4號池', '11.14', '4.22', '38'],
-          ],
-        },
-      ],
-    },
-    {
-      name: 'crop',
-      label: '作物資訊',
-      expandLabel: '展開作物資訊表格',
-      summaryClass: 'crop-detail-list',
-      tableWrapClass: 'crop-table-wrap',
-      summary: [
-        { label: '近期(115/3/5)農試所農地湛水面積：', value: '33', unit: '公頃' },
-        {
-          label: '近5年農試所農地土地水稻平均面積：',
-          lines: [
-            { value: '一期作 28', unit: '公頃' },
-            { value: '二期作 24', unit: '公頃' },
-          ],
-        },
-        {
-          label: '近5年農糧署申報核定水稻平均面積：',
-          lines: [
-            { value: '一期作 15', unit: '公頃' },
-            { value: '二期作 10', unit: '公頃' },
-          ],
-        },
-      ],
-      tables: [
-        {
-          tableClass: 'crop-table',
-          headerRows: [
-            [
-              { label: '序號', rowspan: 3 },
-              { label: '名稱', rowspan: 3 },
-              { lines: ['115/3/5', '湛水面積', '(公頃)'], rowspan: 3 },
-              { label: '近 5 年農試所農地土地水稻面積', colspan: 10 },
-              { label: '近 5 年農糧署申報核定水稻平均面積', colspan: 10 },
-            ],
-            [
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-              { label: '一期作', colspan: 5 },
-              { label: '二期作', colspan: 5 },
-            ],
-            [
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-              ...yearColumns.map((year) => ({ label: year })),
-            ],
-          ],
-          rows: [
-            ['1', '光復圳1-4號池塘小組', '33', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...', '...']
-          ],
-        },
-      ],
-    },
-  ],
-},
+  },
 ]

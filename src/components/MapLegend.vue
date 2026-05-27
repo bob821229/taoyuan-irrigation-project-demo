@@ -1,18 +1,18 @@
 <script setup>
 import { ref, watch } from 'vue'
 
-const pondExpanded = ref(false)
-const groupExpanded = ref(false)
+const pondExpanded = ref(true)
+const groupExpanded = ref(true)
 const emit = defineEmits(['update:filters'])
 const filters = ref({
-  pondHigh: false,
-  pondMidHigh: false,
-  pondMidLow: false,
-  pondLow: false,
-  harvest: false,
-  paddy: false,
-  seedling: false,
-  tilling: false,
+  pondHigh: true,
+  pondMidHigh: true,
+  pondMidLow: true,
+  pondLow: true,
+  harvest: true,
+  paddy: true,
+  seedling: true,
+  tilling: true,
   canalFlow: true,
   pondStorage: true,
 })

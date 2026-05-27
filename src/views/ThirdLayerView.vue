@@ -1,53 +1,27 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第三層_光復圳1支線灌區-12.svg?raw'
-import { fetchCanalMonitorDetail } from '../api/canalMonitorApi'
 import { fetchStationDetail } from '../api/stationDetailApi'
-import { fetchWaterStorageDetail } from '../api/waterStorageApi'
-import CanalInfoTooltip from '../components/CanalInfoTooltip.vue'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
-import WaterStorageTooltip from '../components/WaterStorageTooltip.vue'
 import { canalMonitorDetails } from '../data/canalMonitorDetails'
+import { stationDetails } from '../data/stationDetails'
 import { waterStorageDetails } from '../data/waterStorageDetails'
+import {
+  applySvgFlowEffects,
+  defaultSvgFlowRules,
+} from '../utils/svgFlowEffects'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
-const clickableDetailIds = [
-  'grp_03009001_info',
-  'grp_03009002_info',
-  'grp_03009003_info',
-  'grp_03009004_info',
-  'branch__03009001_info',
-  'weir_03009002_info',
-]
-const waterStorageIds = [
-  'pound_03009001',
-  'pound_03009002',
-  'pound_03009003',
-  'pound_03009004',
-]
-const canalMonitorIds = [
-  'sensor_03009001',
-  'sensor_03009002',
-  'sensor_03009006',
-  'sensor_03009005',
-]
-const cropStageGroupIds = [
-  'grp_03009001',
-  'grp_03009002',
-  'grp_03009003',
-  'grp_03009004',
-]
-
 const defaultLegendFilters = {
-  pondHigh: false,
-  pondMidHigh: false,
-  pondMidLow: false,
-  pondLow: false,
-  harvest: false,
-  paddy: false,
-  seedling: false,
-  tilling: false,
+  pondHigh: true,
+  pondMidHigh: true,
+  pondMidLow: true,
+  pondLow: true,
+  harvest: true,
+  paddy: true,
+  seedling: true,
+  tilling: true,
   canalFlow: true,
   pondStorage: true,
 }
@@ -63,37 +37,37 @@ const cropStageLegendStyles = {
   抽穗期: { filterKey: 'seedling', color: '#fff6b8' },
   整田插秧期: { filterKey: 'tilling', color: '#ff8a8a' },
 }
-const groupStageDetails = cropStageGroupIds.map((id, index) => ({
-  id,
-  cropStage: waterStorageDetails[index]?.cropStage,
-}))
+const irrigationGroupDetails = stationDetails.filter((detail) => {
+  return detail.id.startsWith('grp_') && detail.cropStage
+})
 
 const irrigationMapRef = ref(null)
 const mapValueLabels = ref([])
 const detailVisible = ref(false)
 const detailInfo = ref(null)
 const legendFilters = ref({ ...defaultLegendFilters })
-const waterStorageTooltip = ref({
-  visible: false,
-  x: 0,
-  y: 0,
-  id: null,
-  data: null,
-})
-const canalInfoTooltip = ref({
-  visible: false,
-  x: 0,
-  y: 0,
-  id: null,
-  data: null,
-})
 
 const openDetail = async (id) => {
+  const hasDetail = stationDetails.some((detail) => detail.id === id)
+
+  if (!hasDetail) {
+    window.alert(`暫無該筆資料：${id}`)
+    return
+  }
+
   detailInfo.value = await fetchStationDetail(id)
   detailVisible.value = true
 }
 
 const getPayloadId = (id) => id.replace(/_info$/, '')
+
+const getInfoClickTarget = (target) => {
+  if (!target) {
+    return null
+  }
+
+  return target.closest('[id$="_info"]')
+}
 
 const getPondLegendKey = (percent) => {
   if (percent > 75) {
@@ -157,7 +131,7 @@ const updateMapValueLabels = () => {
       return {
         id: `pond-storage-${detail.id}`,
         type: 'pondStorage',
-        text: `${formatNumber(detail.storage)}${detail.unit}`,
+        text: `${formatNumber(detail.storage)}${detail.unit}(${detail.percent}%)`,
         ...position,
       }
     })
@@ -199,7 +173,7 @@ const applyLegendStyles = () => {
     setElementFill(fillTarget, color)
   })
 
-  groupStageDetails.forEach((detail) => {
+  irrigationGroupDetails.forEach((detail) => {
     const stageStyle = cropStageLegendStyles[detail.cropStage]
     const groupElement = mapElement.querySelector(`#${detail.id}`)
     const fillTarget = groupElement?.querySelector('rect')
@@ -222,7 +196,7 @@ const updateLegendFilters = async (filters) => {
 
 const handleMapClick = async (event) => {
   const target = event.target instanceof Element ? event.target : null
-  const clickedTarget = target?.closest(clickableDetailIds.map((id) => `#${id}`).join(', '))
+  const clickedTarget = getInfoClickTarget(target)
 
   if (!clickedTarget) {
     return
@@ -231,97 +205,13 @@ const handleMapClick = async (event) => {
   await openDetail(getPayloadId(clickedTarget.id))
 }
 
-const showWaterStorageTooltip = async (event, id) => {
-  const rect = event.currentTarget.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
-
-  if (waterStorageTooltip.value.id === id && waterStorageTooltip.value.data) {
-    waterStorageTooltip.value = {
-      ...waterStorageTooltip.value,
-      visible: true,
-      x,
-      y,
-    }
-    return
-  }
-
-  waterStorageTooltip.value = {
-    visible: true,
-    x,
-    y,
-    id,
-    data: await fetchWaterStorageDetail(id),
-  }
-}
-
-const hideWaterStorageTooltip = () => {
-  waterStorageTooltip.value = {
-    ...waterStorageTooltip.value,
-    visible: false,
-  }
-}
-
-const showCanalInfoTooltip = async (event, id) => {
-  const rect = event.currentTarget.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
-
-  if (canalInfoTooltip.value.id === id && canalInfoTooltip.value.data) {
-    canalInfoTooltip.value = {
-      ...canalInfoTooltip.value,
-      visible: true,
-      x,
-      y,
-    }
-    return
-  }
-
-  canalInfoTooltip.value = {
-    visible: true,
-    x,
-    y,
-    id,
-    data: await fetchCanalMonitorDetail(id),
-  }
-}
-
-const hideCanalInfoTooltip = () => {
-  canalInfoTooltip.value = {
-    ...canalInfoTooltip.value,
-    visible: false,
-  }
-}
-
-const hideMapTooltips = () => {
-  hideWaterStorageTooltip()
-  hideCanalInfoTooltip()
-}
-
-const handleMapMouseMove = (event) => {
-  const target = event.target instanceof Element ? event.target : null
-  const hoveredWaterStorageTarget = target?.closest(waterStorageIds.map((id) => `#${id}`).join(', '))
-
-  if (hoveredWaterStorageTarget) {
-    hideCanalInfoTooltip()
-    showWaterStorageTooltip(event, hoveredWaterStorageTarget.id)
-    return
-  }
-
-  const hoveredCanalTarget = target?.closest(canalMonitorIds.map((id) => `#${id}`).join(', '))
-
-  if (hoveredCanalTarget) {
-    hideWaterStorageTooltip()
-    showCanalInfoTooltip(event, hoveredCanalTarget.id)
-    return
-  }
-
-  hideMapTooltips()
-}
-
 onMounted(async () => {
   await nextTick()
   applySvgInfoTooltips(irrigationMapRef.value)
+  applySvgFlowEffects(irrigationMapRef.value, {
+    rules: defaultSvgFlowRules,
+    duration: '0.5s',
+  })
   applyLegendStyles()
   updateMapValueLabels()
   window.addEventListener('resize', updateMapValueLabels)
@@ -350,28 +240,7 @@ onBeforeUnmount(() => {
             role="img"
             aria-label="桃園管理處湖口工作站第三層光復圳1支線灌區圖"
             @click="handleMapClick"
-            @mouseleave="hideMapTooltips"
-            @mousemove="handleMapMouseMove"
             v-html="irrigationSvg"
-          />
-          <WaterStorageTooltip
-            v-if="waterStorageTooltip.data"
-            :visible="waterStorageTooltip.visible"
-            :x="waterStorageTooltip.x"
-            :y="waterStorageTooltip.y"
-            :title="waterStorageTooltip.data.title"
-            :percent="waterStorageTooltip.data.percent"
-            :time="waterStorageTooltip.data.time"
-            :max-storage="waterStorageTooltip.data.maxStorage"
-            :unit="waterStorageTooltip.data.unit"
-            :storage="waterStorageTooltip.data.storage"
-          />
-          <CanalInfoTooltip
-            v-if="canalInfoTooltip.data"
-            :visible="canalInfoTooltip.visible"
-            :x="canalInfoTooltip.x"
-            :y="canalInfoTooltip.y"
-            :info="canalInfoTooltip.data"
           />
           <span
             v-for="label in mapValueLabels"
