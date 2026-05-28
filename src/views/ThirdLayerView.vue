@@ -1,7 +1,7 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第三層_光復圳1支線灌區-12.svg?raw'
-import { fetchStationDetail } from '../api/stationDetailApi'
+import { fetchDetail } from '../api/stationDetailApi'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
 import { canalMonitorDetails } from '../data/canalMonitorDetails'
@@ -11,6 +11,7 @@ import {
   applySvgFlowEffects,
   defaultSvgFlowRules,
 } from '../utils/svgFlowEffects'
+import { normalizeSvgDetailId } from '../utils/svgDetailId'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const defaultLegendFilters = {
@@ -47,19 +48,21 @@ const detailVisible = ref(false)
 const detailInfo = ref(null)
 const legendFilters = ref({ ...defaultLegendFilters })
 
-const openDetail = async (id) => {
-  const hasDetail = stationDetails.some((detail) => detail.id === id)
+const openDetail = async (rawId) => {
+  const payload = normalizeSvgDetailId(rawId)
 
-  if (!hasDetail) {
-    window.alert(`暫無該筆資料：${id}`)
+  if (!payload) {
+    window.alert(`無法解析圖元代碼：${rawId}`)
     return
   }
 
-  detailInfo.value = await fetchStationDetail(id)
-  detailVisible.value = true
+  try {
+    detailInfo.value = await fetchDetail(payload)
+    detailVisible.value = true
+  } catch {
+    window.alert(`暫無該筆資料：${payload.type}_${payload.id}`)
+  }
 }
-
-const getPayloadId = (id) => id.replace(/_info$/, '')
 
 const getInfoClickTarget = (target) => {
   if (!target) {
@@ -202,7 +205,7 @@ const handleMapClick = async (event) => {
     return
   }
 
-  await openDetail(getPayloadId(clickedTarget.id))
+  await openDetail(clickedTarget.id)
 }
 
 onMounted(async () => {
