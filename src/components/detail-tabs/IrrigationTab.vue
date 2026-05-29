@@ -33,7 +33,6 @@ const summary = computed(() => {
 
   if (isSingleIrrigationGroup.value) {
     return [
-      createSummaryItem('灌區名稱：', props.info.name),
       createSummaryItem(
         '灌溉面積：',
         props.info.irrigationArea,
@@ -43,8 +42,7 @@ const summary = computed(() => {
   }
 
   return [
-    createSummaryItem('灌區名稱：', props.info.name),
-    createSummaryItem('灌溉小組數：', props.info.irrigationGroupCount, '個'),
+    createSummaryItem('小組數：', props.info.irrigationGroupCount, '個'),
     createSummaryItem('灌溉面積：', props.info.irrigationArea, '公頃'),
     createSummaryItem('直灌小組數：', props.info.directIrrigationGroupCount, '個'),
     createSummaryItem('直灌面積：', props.info.directIrrigationArea, '公頃'),
@@ -53,7 +51,6 @@ const summary = computed(() => {
 
 const rows = computed(() => {
   return (props.info.groups ?? []).map((group) => [
-    formatValue(group.no),
     group.name,
     formatValue(group.irrigationArea),
     formatBoolean(group.isDirectIrrigation),
@@ -72,7 +69,7 @@ const rows = computed(() => {
     </div>
   </dl>
 
-  <div v-if="rows.length && !isSingleIrrigationGroup" class="detail-actions">
+  <div v-if="rows.length" class="detail-actions">
     <el-button
       class="expand-button"
       circle
@@ -97,6 +94,7 @@ const rows = computed(() => {
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+          <td>{{ rowIndex + 1 }}</td>
           <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
         </tr>
       </tbody>

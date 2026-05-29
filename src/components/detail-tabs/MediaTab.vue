@@ -13,6 +13,7 @@ const images = computed(() => props.info.media?.images ?? [])
 
 <template>
   <el-carousel
+    v-if="images.length"
     class="media-carousel"
     indicator-position="outside"
     height="360px"
@@ -31,4 +32,5 @@ const images = computed(() => props.info.media?.images ?? [])
       </figure>
     </el-carousel-item>
   </el-carousel>
+  <p v-else class="detail-empty">無資料</p>
 </template>

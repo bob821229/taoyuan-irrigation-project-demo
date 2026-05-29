@@ -1,12 +1,15 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import CropTab from './detail-tabs/CropTab.vue'
+import IrrigationSupplyTab from './detail-tabs/IrrigationSupplyTab.vue'
 import IrrigationTab from './detail-tabs/IrrigationTab.vue'
 import LocationTab from './detail-tabs/LocationTab.vue'
 import MediaTab from './detail-tabs/MediaTab.vue'
+import MonitorTab from './detail-tabs/MonitorTab.vue'
 import PondTab from './detail-tabs/PondTab.vue'
 import SensorTab from './detail-tabs/SensorTab.vue'
 import WaterSourceTab from './detail-tabs/WaterSourceTab.vue'
+import WeirTab from './detail-tabs/WeirTab.vue'
 
 const props = defineProps({
   modelValue: {
@@ -28,14 +31,28 @@ const visible = computed({
 
 const activeTab = ref('')
 
+const dialogTitle = computed(() => {
+  const displayName = props.info.name ?? props.info.rawId
+
+  return displayName ? `${displayName} 詳細資料` : '詳細資料'
+})
+
 const detailTabRegistry = {
   irrigation: {
-    label: '灌區資訊',
+    label: '小組資訊',
     component: IrrigationTab,
   },
   pond: {
     label: '埤塘資訊',
     component: PondTab,
+  },
+  weir: {
+    label: '河水堰資訊',
+    component: WeirTab,
+  },
+  irrigationSupply: {
+    label: '灌溉資訊',
+    component: IrrigationSupplyTab,
   },
   waterSource: {
     label: '水源資訊',
@@ -57,9 +74,13 @@ const detailTabRegistry = {
     label: '位置資訊',
     component: LocationTab,
   },
+  monitor: {
+    label: '監測資訊',
+    component: MonitorTab,
+  },
 }
 
-const fallbackTabs = ['irrigation', 'pond', 'crop']
+const fallbackTabs = ['irrigation', 'waterSource', 'crop']
 
 const availableTabKeys = computed(() => {
   return props.info.availableTabs?.length ? props.info.availableTabs : fallbackTabs
@@ -94,7 +115,7 @@ watch(
   <el-dialog
     v-model="visible"
     class="detail-dialog"
-    title="詳細資料"
+    :title="dialogTitle"
     width="min(1440px, calc(100vw - 32px))"
   >
     <el-tabs v-if="detailTabs.length" v-model="activeTab" class="detail-tabs">

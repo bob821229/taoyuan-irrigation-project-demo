@@ -4,9 +4,11 @@ import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第
 import { fetchDetail } from '../api/stationDetailApi'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
-import { canalMonitorDetails } from '../data/canalMonitorDetails'
-import { stationDetails } from '../data/stationDetails'
-import { waterStorageDetails } from '../data/waterStorageDetails'
+import {
+  thirdLayerCanalMonitorDetails,
+  thirdLayerIrrigationGroupDetails,
+  thirdLayerWaterStorageDetails,
+} from '../data/thirdLayerMapDetails'
 import {
   applySvgFlowEffects,
   defaultSvgFlowRules,
@@ -38,10 +40,6 @@ const cropStageLegendStyles = {
   抽穗期: { filterKey: 'seedling', color: '#fff6b8' },
   整田插秧期: { filterKey: 'tilling', color: '#ff8a8a' },
 }
-const irrigationGroupDetails = stationDetails.filter((detail) => {
-  return detail.id.startsWith('grp_') && detail.cropStage
-})
-
 const irrigationMapRef = ref(null)
 const mapValueLabels = ref([])
 const detailVisible = ref(false)
@@ -123,7 +121,7 @@ const getMapLabelPosition = (id) => {
 }
 
 const updateMapValueLabels = () => {
-  const pondLabels = waterStorageDetails
+  const pondLabels = thirdLayerWaterStorageDetails
     .map((detail) => {
       const position = getMapLabelPosition(detail.id)
 
@@ -140,7 +138,7 @@ const updateMapValueLabels = () => {
     })
     .filter(Boolean)
 
-  const canalLabels = canalMonitorDetails
+  const canalLabels = thirdLayerCanalMonitorDetails
     .map((detail) => {
       const position = getMapLabelPosition(detail.id)
 
@@ -152,6 +150,7 @@ const updateMapValueLabels = () => {
         id: `canal-flow-${detail.id}`,
         type: 'canalFlow',
         text: `${detail.flow}${detail.flowUnit}`,
+        isAlert: detail.flow > detail.waterLevelAlertThreshold,
         ...position,
       }
     })
@@ -167,7 +166,7 @@ const applyLegendStyles = () => {
     return
   }
 
-  waterStorageDetails.forEach((detail) => {
+  thirdLayerWaterStorageDetails.forEach((detail) => {
     const legendKey = getPondLegendKey(detail.percent)
     const pondElement = mapElement.querySelector(`#${detail.id}`)
     const fillTarget = pondElement?.querySelector('path')
@@ -176,7 +175,7 @@ const applyLegendStyles = () => {
     setElementFill(fillTarget, color)
   })
 
-  irrigationGroupDetails.forEach((detail) => {
+  thirdLayerIrrigationGroupDetails.forEach((detail) => {
     const stageStyle = cropStageLegendStyles[detail.cropStage]
     const groupElement = mapElement.querySelector(`#${detail.id}`)
     const fillTarget = groupElement?.querySelector('rect')
@@ -250,6 +249,7 @@ onBeforeUnmount(() => {
             v-show="legendFilters[label.type]"
             :key="label.id"
             class="map-value-label"
+            :class="{ 'is-alert': label.isAlert }"
             :style="{ left: `${label.x}px`, top: `${label.y}px` }"
           >
             {{ label.text }}

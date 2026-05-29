@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { createSeasonLine, createSummaryItem, formatValue } from './tabFormatters'
+import { createSummaryItem, formatValue } from './tabFormatters'
 
 const props = defineProps({
   info: {
@@ -15,30 +15,20 @@ const crop = computed(() => props.info.crop ?? {})
 const years = computed(() => crop.value.years ?? [])
 
 const summary = computed(() => [
+  createSummaryItem('小組數：', crop.value.groupCount ?? props.info.irrigationGroupCount, '個'),
   createSummaryItem(
-    `近期(${crop.value.floodedAreaDate})農試所農地湛水面積：`,
+    '農地湛水面積：',
     crop.value.recentFloodedArea,
     '公頃',
   ),
-  {
-    label: '近5年農試所農地土地水稻平均面積：',
-    lines: [
-      createSeasonLine('一期作', crop.value.researchAverage?.firstSeason),
-      createSeasonLine('二期作', crop.value.researchAverage?.secondSeason),
-    ],
-  },
-  {
-    label: '近5年農糧署申報核定水稻平均面積：',
-    lines: [
-      createSeasonLine('一期作', crop.value.agencyAverage?.firstSeason),
-      createSeasonLine('二期作', crop.value.agencyAverage?.secondSeason),
-    ],
-  },
+  createSummaryItem('農試所一期作：', crop.value.researchAverage?.firstSeason, '公頃'),
+  createSummaryItem('農試所二期作：', crop.value.researchAverage?.secondSeason, '公頃'),
+  createSummaryItem('農糧署一期作：', crop.value.agencyAverage?.firstSeason, '公頃'),
+  createSummaryItem('農糧署二期作：', crop.value.agencyAverage?.secondSeason, '公頃'),
 ])
 
 const rows = computed(() => {
   return (crop.value.rows ?? []).map((row) => [
-    formatValue(row.no),
     row.name,
     formatValue(row.floodedArea),
     ...row.researchFirstSeason.map(formatValue),
@@ -54,19 +44,8 @@ const rows = computed(() => {
     <div v-for="item in summary" :key="item.label">
       <dt>{{ item.label }}</dt>
       <dd>
-        <template v-if="item.lines">
-          <span
-            v-for="line in item.lines"
-            :key="line.value"
-            class="detail-line"
-          >
-            {{ line.value }}<span>{{ line.unit }}</span>
-          </span>
-        </template>
-        <template v-else>
-          {{ item.value }}
-          <span v-if="item.unit">{{ item.unit }}</span>
-        </template>
+        {{ item.value }}
+        <span v-if="item.unit">{{ item.unit }}</span>
       </dd>
     </div>
   </dl>
@@ -122,6 +101,7 @@ const rows = computed(() => {
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+          <td>{{ rowIndex + 1 }}</td>
           <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
         </tr>
       </tbody>

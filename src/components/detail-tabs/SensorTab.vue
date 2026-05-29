@@ -44,6 +44,10 @@ const isPondStorage = computed(() => props.info.type === 'pound')
       <dd>{{ sensor.time }}</dd>
     </div>
     <div>
+      <dt>最大蓄水量：</dt>
+      <dd>{{ formatValue(sensor.maxStorage) }}<span>{{ sensor.storageUnit }}</span></dd>
+    </div>
+    <div>
       <dt>有效蓄水量：</dt>
       <dd>{{ formatValue(sensor.effectiveStorage) }}<span>{{ sensor.storageUnit }}</span></dd>
     </div>

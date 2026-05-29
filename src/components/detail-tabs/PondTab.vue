@@ -16,11 +16,10 @@ const pondInfo = computed(() => props.info.pond)
 const summary = computed(() => {
   if (pondInfo.value) {
     return [
-      createSummaryItem('埤塘數量：', pondInfo.value.count, '口'),
+      createSummaryItem('資料時間：', pondInfo.value.updatedAt),
       createSummaryItem('最大蓄水量：', pondInfo.value.maxStorage, pondInfo.value.unit ?? '萬噸'),
       createSummaryItem('有效蓄水量：', pondInfo.value.effectiveStorage, pondInfo.value.unit ?? '萬噸'),
       createSummaryItem('蓄水率：', pondInfo.value.storageRate, '%'),
-      createSummaryItem('更新時間：', pondInfo.value.updatedAt),
     ]
   }
 
@@ -34,9 +33,9 @@ const summary = computed(() => {
 
 const rows = computed(() => {
   return (props.info.ponds ?? []).map((pond) => [
-    formatValue(pond.no),
     pond.name,
     formatValue(pond.maxStorage),
+    formatValue(pond.time),
     formatValue(pond.effectiveStorage),
     formatValue(pond.storageRate),
   ])
@@ -74,13 +73,20 @@ const rows = computed(() => {
           <th>序號</th>
           <th>名稱</th>
           <th>最大蓄水量(萬噸)</th>
+          <th>資料時間</th>
           <th>有效蓄水量(萬噸)</th>
           <th>蓄水率(%)</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+          <td>{{ rowIndex + 1 }}</td>
+          <td
+            v-for="(cell, cellIndex) in row"
+            :key="cellIndex"
+          >
+            {{ cell }}
+          </td>
         </tr>
       </tbody>
     </table>
