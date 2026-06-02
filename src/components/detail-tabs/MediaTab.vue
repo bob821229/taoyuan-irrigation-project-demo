@@ -8,6 +8,14 @@ const props = defineProps({
   },
 })
 
+const resolvePublicUrl = (url) => {
+  if (!url || /^(https?:)?\/\//.test(url) || url.startsWith('data:')) {
+    return url
+  }
+
+  return `${import.meta.env.BASE_URL}${url.replace(/^\/+/, '')}`
+}
+
 const images = computed(() => props.info.media?.images ?? [])
 </script>
 
@@ -26,7 +34,7 @@ const images = computed(() => props.info.media?.images ?? [])
     >
       <figure class="media-slide">
         <div class="media-preview">
-          <img v-if="image.url" :src="image.url" :alt="image.title">
+          <img v-if="image.url" :src="resolvePublicUrl(image.url)" :alt="image.title">
           <span v-else>影像待補</span>
         </div>
       </figure>

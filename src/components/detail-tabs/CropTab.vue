@@ -13,6 +13,18 @@ const expanded = ref(false)
 
 const crop = computed(() => props.info.crop ?? {})
 const years = computed(() => crop.value.years ?? [])
+const yearCount = computed(() => years.value.length)
+const cropPeriodLabel = computed(() => (years.value.includes('平均') ? '近 5 年及平均' : '近 5 年'))
+
+const seasonValues = (values) => {
+  const paddedValues = Array.isArray(values) ? values.slice(0, yearCount.value) : []
+
+  while (paddedValues.length < yearCount.value) {
+    paddedValues.push(null)
+  }
+
+  return paddedValues.map(formatValue)
+}
 
 const summary = computed(() => [
   createSummaryItem('小組數：', crop.value.groupCount ?? props.info.irrigationGroupCount, '個'),
@@ -31,10 +43,10 @@ const rows = computed(() => {
   return (crop.value.rows ?? []).map((row) => [
     row.name,
     formatValue(row.floodedArea),
-    ...row.researchFirstSeason.map(formatValue),
-    ...row.researchSecondSeason.map(formatValue),
-    ...row.agencyFirstSeason.map(formatValue),
-    ...row.agencySecondSeason.map(formatValue),
+    ...seasonValues(row.researchFirstSeason),
+    ...seasonValues(row.researchSecondSeason),
+    ...seasonValues(row.agencyFirstSeason),
+    ...seasonValues(row.agencySecondSeason),
   ])
 })
 </script>
@@ -70,7 +82,7 @@ const rows = computed(() => {
         <col class="crop-col-name">
         <col class="crop-col-area">
         <col
-          v-for="index in 20"
+          v-for="index in yearCount * 4"
           :key="index"
           class="crop-col-year"
         >
@@ -84,14 +96,14 @@ const rows = computed(() => {
             <span class="table-header-line">湛水面積</span>
             <span class="table-header-line">(公頃)</span>
           </th>
-          <th colspan="10">近 5 年農試所農地土地水稻面積</th>
-          <th colspan="10">近 5 年農糧署申報核定水稻平均面積</th>
+          <th :colspan="yearCount * 2">{{ cropPeriodLabel }}農試所農地土地水稻面積</th>
+          <th :colspan="yearCount * 2">{{ cropPeriodLabel }}農糧署申報核定水稻平均面積</th>
         </tr>
         <tr>
-          <th colspan="5">一期作</th>
-          <th colspan="5">二期作</th>
-          <th colspan="5">一期作</th>
-          <th colspan="5">二期作</th>
+          <th :colspan="yearCount">一期作</th>
+          <th :colspan="yearCount">二期作</th>
+          <th :colspan="yearCount">一期作</th>
+          <th :colspan="yearCount">二期作</th>
         </tr>
         <tr>
           <template v-for="groupIndex in 4" :key="groupIndex">
