@@ -126,9 +126,13 @@ export const detailOverrides = {
       ],
       waterSource: {
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
           { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
+          { sourceType: '河水堰', sourceName: '社子溪03號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
+          { sourceType: '河水堰', sourceName: '社子溪04號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
           { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '埤塘', sourceName: '光復圳1-2號池' },
+          { sourceType: '埤塘', sourceName: '光復圳1-3號池' },
+          { sourceType: '埤塘', sourceName: '光復圳1-4號池' },
         ],
       },
       crop: {
@@ -197,9 +201,6 @@ export const detailOverrides = {
       ponds: [{ name: '光復圳1-1號池', maxStorage: 6.67, time: '115/05/15 16時', effectiveStorage: 3.78, storageRate: 57 }],
       waterSource: {
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
         ],
       },
       crop: {
@@ -242,9 +243,8 @@ export const detailOverrides = {
       ponds: [{ name: '光復圳1-2號池', maxStorage: 9.67, time: '115/05/15 16時', effectiveStorage: 2.56, storageRate: 26 }],
       waterSource: {
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
           { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '埤塘', sourceName: '光復圳1-2號池' },
         ],
       },
       crop: {
@@ -287,9 +287,8 @@ export const detailOverrides = {
       ponds: [{ name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 14時', effectiveStorage: 3.53, storageRate: 33 }],
       waterSource: {
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '河水堰', sourceName: '社子溪03號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
+          { sourceType: '埤塘', sourceName: '光復圳1-3號池' },
         ],
       },
       crop: {
@@ -332,9 +331,8 @@ export const detailOverrides = {
       ponds: [{ name: '光復圳1-4號池', maxStorage: 11.14, time: '115/05/15 12時', effectiveStorage: 4.22, storageRate: 38 }],
       waterSource: {
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '河水堰', sourceName: '社子溪04號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
+          { sourceType: '埤塘', sourceName: '光復圳1-4號池' },
         ],
       },
       crop: {
@@ -371,12 +369,11 @@ export const detailOverrides = {
         group: { area: 78.86, groupName: '光復圳1-1號池塘小組', isDirectIrrigation: false },
         pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
       },
-      pond: { count: 1, maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57, updatedAt: '115/05/15 16時', unit: '萬噸' },
+      pond: {},
       waterSource: {
+        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pondRows: [],
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
         ],
       },
       sensor: { name: '光復圳1-1號池', time: '115/05/15 16時', maxStorage: 6.67, effectiveStorage: 3.78, storageUnit: '萬噸', storageRate: 57 },
@@ -395,12 +392,11 @@ export const detailOverrides = {
         group: { area: 33.31, groupName: '光復圳1-2號池塘小組', isDirectIrrigation: false },
         pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
       },
-      pond: { count: 1, maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26, updatedAt: '115/05/15 16時', unit: '萬噸' },
       waterSource: {
+        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pondRows: [],
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
           { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
         ],
       },
       sensor: { name: '光復圳1-2號池', time: '115/05/15 16時', maxStorage: 9.67, effectiveStorage: 2.56, storageUnit: '萬噸', storageRate: 26 },
@@ -419,12 +415,11 @@ export const detailOverrides = {
         group: { area: 35.05, groupName: '光復圳1-3號池塘小組', isDirectIrrigation: false },
         pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
       },
-      pond: { count: 1, maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33, updatedAt: '115/05/15 16時', unit: '萬噸' },
       waterSource: {
+        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pondRows: [],
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '河水堰', sourceName: '社子溪03號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
         ],
       },
       sensor: { name: '光復圳1-3號池', time: '115/05/15 16時', maxStorage: 10.56, effectiveStorage: 3.53, storageUnit: '萬噸', storageRate: 33 },
@@ -443,12 +438,11 @@ export const detailOverrides = {
         group: { area: 53.41, groupName: '光復圳1-4號池塘小組', isDirectIrrigation: false },
         pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
       },
-      pond: { count: 1, maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38, updatedAt: '115/05/15 16時', unit: '萬噸' },
       waterSource: {
+        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pondRows: [],
         rows: [
-          { sourceType: '渠道', sourceName: '光復圳1支線' },
-          { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
-          { sourceType: '埤塘', sourceName: '光復圳1-1號池' },
+          { sourceType: '河水堰', sourceName: '社子溪04號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
         ],
       },
       sensor: { name: '光復圳1-4號池', time: '115/05/15 16時', maxStorage: 11.14, effectiveStorage: 4.22, storageUnit: '萬噸', storageRate: 38 },
@@ -480,7 +474,7 @@ export const detailOverrides = {
     '03009002': {
       name: '光復圳圓井退水門',
       availableTabs: ['sensor', 'media', 'location'],
-      sensor: { name: '光復圳圓井退水門', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms' },
+      sensor: { name: '光復圳圓井退水門', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 2, flowUnit: 'cms' },
       media: {
         images: [
           { title: 'sensor_03009002_1', url: '/images/sensor_03009002/1.png' },

@@ -304,7 +304,7 @@ h1 {
 
 .crop-detail-list div {
   align-items: flex-start;
-  grid-template-columns: 430px minmax(0, 1fr);
+  grid-template-columns: minmax(520px, max-content) minmax(0, 1fr);
   min-height: 68px;
 }
 

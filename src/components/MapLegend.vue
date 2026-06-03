@@ -1,9 +1,9 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
-const pondExpanded = ref(true)
-const groupExpanded = ref(true)
 const emit = defineEmits(['update:filters'])
+const pondFilterKeys = ['pondHigh', 'pondMidHigh', 'pondMidLow', 'pondLow']
+const groupFilterKeys = ['harvest', 'paddy', 'seedling', 'tilling']
 const filters = ref({
   pondHigh: true,
   pondMidHigh: true,
@@ -15,6 +15,26 @@ const filters = ref({
   tilling: true,
   canalFlow: true,
   pondStorage: true,
+})
+
+const createGroupChecked = (keys) => computed({
+  get: () => keys.every((key) => filters.value[key]),
+  set: (checked) => {
+    keys.forEach((key) => {
+      filters.value[key] = checked
+    })
+  },
+})
+
+const pondAllChecked = createGroupChecked(pondFilterKeys)
+const groupAllChecked = createGroupChecked(groupFilterKeys)
+const pondIndeterminate = computed(() => {
+  const checkedCount = pondFilterKeys.filter((key) => filters.value[key]).length
+  return checkedCount > 0 && checkedCount < pondFilterKeys.length
+})
+const groupIndeterminate = computed(() => {
+  const checkedCount = groupFilterKeys.filter((key) => filters.value[key]).length
+  return checkedCount > 0 && checkedCount < groupFilterKeys.length
 })
 
 watch(
@@ -39,10 +59,6 @@ watch(
       <span>河水堰</span>
     </div>
     <div class="legend-row">
-      <span class="legend-photo" aria-hidden="true"></span>
-      <span>現地影片、照片(點擊後呈現)</span>
-    </div>
-    <div class="legend-row">
       <span class="legend-info" aria-hidden="true">i</span>
       <span>詳細統計資訊(點擊後呈現)</span>
     </div>
@@ -55,29 +71,16 @@ watch(
       <span>河川區排</span>
     </div>
 
-    <div class="legend-row">
+    <label class="legend-check legend-group-heading">
+      <input
+        v-model="pondAllChecked"
+        type="checkbox"
+        :indeterminate="pondIndeterminate"
+      >
       <span class="legend-pill pond-main" aria-hidden="true"></span>
       <span>埤塘</span>
-      <button
-        class="legend-toggle-button"
-        type="button"
-        :aria-expanded="pondExpanded"
-        aria-controls="pond-legend-details"
-        aria-label="切換埤塘圖例明細"
-        @click="pondExpanded = !pondExpanded"
-      >
-        <span
-          class="legend-toggle"
-          :class="{ 'is-plus': !pondExpanded, 'is-minus': pondExpanded }"
-          aria-hidden="true"
-        ></span>
-      </button>
-    </div>
-    <div
-      v-show="pondExpanded"
-      id="pond-legend-details"
-      class="legend-section"
-    >
+    </label>
+    <div id="pond-legend-details" class="legend-section">
       <label class="legend-check legend-indent">
         <input v-model="filters.pondHigh" type="checkbox">
         <span class="legend-pill pond-high" aria-hidden="true"></span>
@@ -100,29 +103,16 @@ watch(
       </label>
     </div>
 
-    <div class="legend-row">
+    <label class="legend-check legend-group-heading">
+      <input
+        v-model="groupAllChecked"
+        type="checkbox"
+        :indeterminate="groupIndeterminate"
+      >
       <span class="legend-swatch group-main" aria-hidden="true"></span>
       <span>水利小組</span>
-      <button
-        class="legend-toggle-button"
-        type="button"
-        :aria-expanded="groupExpanded"
-        aria-controls="group-legend-details"
-        aria-label="切換水利小組圖例明細"
-        @click="groupExpanded = !groupExpanded"
-      >
-        <span
-          class="legend-toggle"
-          :class="{ 'is-plus': !groupExpanded, 'is-minus': groupExpanded }"
-          aria-hidden="true"
-        ></span>
-      </button>
-    </div>
-    <div
-      v-show="groupExpanded"
-      id="group-legend-details"
-      class="legend-section"
-    >
+    </label>
+    <div id="group-legend-details" class="legend-section">
       <label class="legend-check legend-indent">
         <input v-model="filters.harvest" type="checkbox">
         <span class="legend-swatch harvest" aria-hidden="true"></span>
@@ -198,6 +188,10 @@ watch(
   cursor: pointer;
 }
 
+.legend-group-heading {
+  font-weight: 500;
+}
+
 .legend-check input {
   width: 13px;
   height: 13px;
@@ -228,19 +222,6 @@ watch(
   height: 17px;
   background: #000000;
   clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
-}
-
-.legend-photo {
-  position: relative;
-  width: 19px;
-  height: 15px;
-  border: 1px solid #222222;
-  border-radius: 2px;
-  background:
-    radial-gradient(circle at 28% 34%, #ffffff 0 2px, transparent 2.5px),
-    linear-gradient(135deg, transparent 47%, #2f95d1 48% 58%, transparent 59%),
-    linear-gradient(45deg, transparent 45%, #89cdf0 46% 60%, transparent 61%),
-    #77c7f0;
 }
 
 .legend-cctv {
@@ -352,46 +333,6 @@ watch(
 
 .tilling {
   background: #ff8a8a;
-}
-
-.legend-toggle {
-  position: relative;
-  width: 12px;
-  height: 12px;
-  flex: 0 0 auto;
-}
-
-.legend-toggle-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.legend-toggle-button:focus-visible {
-  outline: 2px solid #176f8d;
-  outline-offset: 2px;
-}
-
-.legend-toggle::before,
-.legend-toggle::after {
-  position: absolute;
-  top: 5px;
-  left: 1px;
-  width: 10px;
-  height: 3px;
-  background: #176f8d;
-  content: "";
-}
-
-.legend-toggle.is-plus::after {
-  transform: rotate(90deg);
 }
 
 @media (max-width: 720px) {

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { createSummaryItem, formatValue } from './tabFormatters'
+import { createSummaryItem, createSeasonLine, formatValue } from './tabFormatters'
 
 const props = defineProps({
   info: {
@@ -14,7 +14,6 @@ const expanded = ref(false)
 const crop = computed(() => props.info.crop ?? {})
 const years = computed(() => crop.value.years ?? [])
 const yearCount = computed(() => years.value.length)
-const cropPeriodLabel = computed(() => (years.value.includes('平均') ? '近 5 年及平均' : '近 5 年'))
 
 const seasonValues = (values) => {
   const paddedValues = Array.isArray(values) ? values.slice(0, yearCount.value) : []
@@ -29,14 +28,24 @@ const seasonValues = (values) => {
 const summary = computed(() => [
   createSummaryItem('小組數：', crop.value.groupCount ?? props.info.irrigationGroupCount, '個'),
   createSummaryItem(
-    '農地湛水面積：',
+    `近期(${crop.value.floodedAreaDate})農地湛水面積：`,
     crop.value.recentFloodedArea,
     '公頃',
   ),
-  createSummaryItem('農試所一期作：', crop.value.researchAverage?.firstSeason, '公頃'),
-  createSummaryItem('農試所二期作：', crop.value.researchAverage?.secondSeason, '公頃'),
-  createSummaryItem('農糧署一期作：', crop.value.agencyAverage?.firstSeason, '公頃'),
-  createSummaryItem('農糧署二期作：', crop.value.agencyAverage?.secondSeason, '公頃'),
+  {
+    label: '近五年農試所農地土地水稻平均面積：',
+    lines: [
+      createSeasonLine('一期作', crop.value.researchAverage?.firstSeason),
+      createSeasonLine('二期作', crop.value.researchAverage?.secondSeason),
+    ],
+  },
+  {
+    label: '近五年農糧署水稻核定平均面積：',
+    lines: [
+      createSeasonLine('一期作', crop.value.agencyAverage?.firstSeason),
+      createSeasonLine('二期作', crop.value.agencyAverage?.secondSeason),
+    ],
+  },
 ])
 
 const rows = computed(() => {
@@ -56,8 +65,20 @@ const rows = computed(() => {
     <div v-for="item in summary" :key="item.label">
       <dt>{{ item.label }}</dt>
       <dd>
-        {{ item.value }}
-        <span v-if="item.unit">{{ item.unit }}</span>
+        <template v-if="item.lines">
+          <span
+            v-for="line in item.lines"
+            :key="line.value"
+            class="detail-line"
+          >
+            {{ line.value }}
+            <span v-if="line.unit">{{ line.unit }}</span>
+          </span>
+        </template>
+        <template v-else>
+          {{ item.value }}
+          <span v-if="item.unit">{{ item.unit }}</span>
+        </template>
       </dd>
     </div>
   </dl>
@@ -96,8 +117,8 @@ const rows = computed(() => {
             <span class="table-header-line">湛水面積</span>
             <span class="table-header-line">(公頃)</span>
           </th>
-          <th :colspan="yearCount * 2">{{ cropPeriodLabel }}農試所農地土地水稻面積</th>
-          <th :colspan="yearCount * 2">{{ cropPeriodLabel }}農糧署申報核定水稻平均面積</th>
+          <th :colspan="yearCount * 2">近 5 年農試所農地土地水稻面積</th>
+          <th :colspan="yearCount * 2">近 5 年農糧署申報核定水稻面積</th>
         </tr>
         <tr>
           <th :colspan="yearCount">一期作</th>

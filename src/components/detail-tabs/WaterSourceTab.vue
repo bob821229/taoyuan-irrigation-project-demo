@@ -19,37 +19,73 @@ const expandedSections = reactive({
 
 const canalRows = computed(() => rows.value.filter((row) => row.sourceType === '渠道'))
 const weirRows = computed(() => rows.value.filter((row) => row.sourceType === '河水堰'))
-const pondRows = computed(() => {
-  const explicitRows = source.value.pondRows
 
-  if (explicitRows?.length) {
-    return explicitRows
+const toPondRow = (pond, name) => ({
+  name: pond.name ?? name,
+  time: pond.time ?? pond.updatedAt,
+  maxStorage: pond.maxStorage,
+  effectiveStorage: pond.effectiveStorage,
+  storageRate: pond.storageRate,
+})
+
+const pondRows = computed(() => {
+  if (Object.hasOwn(source.value, 'pondRows')) {
+    return (source.value.pondRows ?? []).map((row) => toPondRow(row, row.name))
   }
 
   if (props.info.pond) {
-    return [{
-      name: props.info.name,
-      time: props.info.pond.updatedAt,
-      maxStorage: props.info.pond.maxStorage,
-      effectiveStorage: props.info.pond.effectiveStorage,
-      storageRate: props.info.pond.storageRate,
-    }]
+    return [toPondRow(props.info.pond, props.info.name)]
   }
 
-  return props.info.ponds ?? []
+  return (props.info.ponds ?? []).map((pond) => toPondRow(pond, pond.name))
 })
 
-const pondSummarySource = computed(() => source.value.pondSummary ?? {
-  count: props.info.pondCount ?? pondRows.value.length,
-  maxStorage: props.info.maxStorage,
-  effectiveStorage: props.info.effectiveStorage,
-  storageRate: props.info.storageRate,
-  unit: '萬噸',
+const toNumber = (value) => {
+  const numberValue = Number(value)
+
+  return Number.isFinite(numberValue) ? numberValue : null
+}
+
+const sumPondRows = (field) => {
+  const values = pondRows.value.map((row) => toNumber(row[field]))
+
+  if (!values.length || values.some((value) => value === null)) {
+    return null
+  }
+
+  return values.reduce((sum, value) => sum + value, 0)
+}
+
+const pondSummarySource = computed(() => {
+  if (Object.hasOwn(source.value, 'pondSummary')) {
+    return {
+      unit: '萬噸',
+      ...(source.value.pondSummary ?? {}),
+    }
+  }
+
+  const maxStorage = sumPondRows('maxStorage')
+  const effectiveStorage = sumPondRows('effectiveStorage')
+  const storageRate = maxStorage && effectiveStorage !== null
+    ? Math.round((effectiveStorage / maxStorage) * 100)
+    : null
+
+  return {
+    count: pondRows.value.length,
+    maxStorage,
+    effectiveStorage,
+    storageRate,
+    unit: '萬噸',
+  }
 })
 
 const hasCanal = computed(() => canalRows.value.length > 0)
 const hasWeir = computed(() => weirRows.value.length > 0)
-const hasPond = computed(() => pondRows.value.length > 0)
+const hasPondSummaryCount = computed(() => (
+  pondSummarySource.value.count !== null
+  && pondSummarySource.value.count !== undefined
+))
+const hasPond = computed(() => hasPondSummaryCount.value || pondRows.value.length > 0)
 
 const pondSummary = computed(() => [
   createSummaryItem('埤塘數：', pondSummarySource.value.count, '口'),
@@ -155,7 +191,7 @@ const pondSummary = computed(() => [
         </dd>
       </div>
     </dl>
-    <div class="detail-actions">
+    <div v-if="pondRows.length" class="detail-actions">
       <el-button
         class="expand-button"
         circle
@@ -167,7 +203,8 @@ const pondSummary = computed(() => [
         {{ expandedSections.pond ? '-' : '+' }}
       </el-button>
     </div>
-    <div v-if="expandedSections.pond" class="detail-table-wrap">
+    <p v-else class="detail-empty">暫無埤塘資訊</p>
+    <div v-if="expandedSections.pond && pondRows.length" class="detail-table-wrap">
       <table class="detail-table">
         <thead>
           <tr>

@@ -2,32 +2,14 @@
 import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第二層_湖口工作站灌區-13.svg?raw'
-import { fetchDetail } from '../api/stationDetailApi'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
+import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
 import { applySvgFlowEffects } from '../utils/svgFlowEffects'
-import { normalizeSvgDetailId } from '../utils/svgDetailId'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const router = useRouter()
-const detailVisible = ref(false)
-const detailInfo = ref(null)
 const irrigationMapRef = ref(null)
-
-const openDetail = async (rawId) => {
-  const payload = normalizeSvgDetailId(rawId)
-
-  if (!payload) {
-    window.alert(`無法解析圖元代碼：${rawId}`)
-    return
-  }
-
-  try {
-    detailInfo.value = await fetchDetail(payload)
-    detailVisible.value = true
-  } catch {
-    window.alert(`暫無該筆資料：${payload.type}_${payload.id}`)
-  }
-}
+const { detailVisible, detailInfo, openDetail } = useSvgDetailDialog()
 
 const goToGuangfuLayer = () => {
   router.push({ name: 'guangfu-1' })
@@ -63,7 +45,7 @@ onMounted(async () => {
     <el-header class="topbar">
       <div>
         <!-- <p class="eyebrow">桃園管理處 · 湖口工作站</p> -->
-        <h1>湖口工作站灌區</h1>
+        <h1>湖口站灌區</h1>
       </div>
     </el-header>
 

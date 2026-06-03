@@ -12,9 +12,32 @@ const props = defineProps({
 const expanded = ref(false)
 
 const pondInfo = computed(() => props.info.pond)
+const hasValue = (value) => value !== null && value !== undefined && value !== ''
+
+const hasSinglePondInfo = computed(() => {
+  if (!pondInfo.value) {
+    return false
+  }
+
+  return [
+    pondInfo.value.updatedAt,
+    pondInfo.value.maxStorage,
+    pondInfo.value.effectiveStorage,
+    pondInfo.value.storageRate,
+  ].some(hasValue)
+})
+
+const hasAggregatePondInfo = computed(() => {
+  return [
+    props.info.pondCount,
+    props.info.maxStorage,
+    props.info.effectiveStorage,
+    props.info.storageRate,
+  ].some(hasValue)
+})
 
 const summary = computed(() => {
-  if (pondInfo.value) {
+  if (hasSinglePondInfo.value) {
     return [
       createSummaryItem('資料時間：', pondInfo.value.updatedAt),
       createSummaryItem('最大蓄水量：', pondInfo.value.maxStorage, pondInfo.value.unit ?? '萬噸'),
@@ -23,12 +46,16 @@ const summary = computed(() => {
     ]
   }
 
-  return [
-    createSummaryItem('埤塘數量：', props.info.pondCount, '口'),
-    createSummaryItem('總最大蓄水量：', props.info.maxStorage, '萬噸'),
-    createSummaryItem('總有效蓄水量：', props.info.effectiveStorage, '萬噸'),
-    createSummaryItem('總蓄水率：', props.info.storageRate, '%'),
-  ]
+  if (hasAggregatePondInfo.value) {
+    return [
+      createSummaryItem('埤塘數量：', props.info.pondCount, '口'),
+      createSummaryItem('總最大蓄水量：', props.info.maxStorage, '萬噸'),
+      createSummaryItem('總有效蓄水量：', props.info.effectiveStorage, '萬噸'),
+      createSummaryItem('總蓄水率：', props.info.storageRate, '%'),
+    ]
+  }
+
+  return []
 })
 
 const rows = computed(() => {
@@ -43,7 +70,7 @@ const rows = computed(() => {
 </script>
 
 <template>
-  <dl class="detail-list">
+  <dl v-if="summary.length" class="detail-list">
     <div v-for="item in summary" :key="item.label">
       <dt>{{ item.label }}</dt>
       <dd>
@@ -52,6 +79,7 @@ const rows = computed(() => {
       </dd>
     </div>
   </dl>
+  <p v-else class="detail-empty">暫無埤塘資訊</p>
 
   <div v-if="rows.length" class="detail-actions">
     <el-button

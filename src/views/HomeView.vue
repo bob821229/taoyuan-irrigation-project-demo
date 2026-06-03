@@ -2,41 +2,29 @@
 import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第一層_桃園管理處灌區-08.svg?raw'
-import { fetchDetail } from '../api/stationDetailApi'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
+import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
 import { applySvgFlowEffects } from '../utils/svgFlowEffects'
-import { normalizeSvgDetailId } from '../utils/svgDetailId'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const router = useRouter()
-const detailVisible = ref(false)
-const detailInfo = ref(null)
 const irrigationMapRef = ref(null)
 const selectedIrrigationArea = ref('桃園管理處灌區')
-
-const openDetail = async (rawId) => {
-  const payload = normalizeSvgDetailId(rawId)
-
-  if (!payload) {
-    window.alert(`無法解析圖元代碼：${rawId}`)
-    return
-  }
-
-  try {
-    detailInfo.value = await fetchDetail(payload)
-    detailVisible.value = true
-  } catch {
-    window.alert(`暫無該筆資料：${payload.type}_${payload.id}`)
-  }
-}
+const { detailVisible, detailInfo, openDetail } = useSvgDetailDialog()
 
 const goToHukouLayer = () => {
   router.push({ name: 'hukou' })
 }
 
+const goToGuangfuLayer = () => {
+  router.push({ name: 'guangfu-1' })
+}
+
 const handleMapClick = async (event) => {
   const target = event.target instanceof Element ? event.target : null
-  const clickedTarget = target?.closest('#stn_03009001_nav, #stn_03009001_info')
+  const clickedTarget = target?.closest(
+    '#stn_03009001_nav, #stn_03009001_info, #branch__03009001_nav, #branch__03009001_info',
+  )
 
   if (!clickedTarget) {
     return
@@ -44,6 +32,11 @@ const handleMapClick = async (event) => {
 
   if (clickedTarget.id === 'stn_03009001_nav') {
     goToHukouLayer()
+    return
+  }
+
+  if (clickedTarget.id === 'branch__03009001_nav') {
+    goToGuangfuLayer()
     return
   }
 

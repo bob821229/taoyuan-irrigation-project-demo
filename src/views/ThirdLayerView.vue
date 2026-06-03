@@ -1,9 +1,9 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第三層_光復圳1支線灌區-12.svg?raw'
-import { fetchDetail } from '../api/stationDetailApi'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
+import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
 import {
   thirdLayerCanalMonitorDetails,
   thirdLayerIrrigationGroupDetails,
@@ -13,7 +13,6 @@ import {
   applySvgFlowEffects,
   defaultSvgFlowRules,
 } from '../utils/svgFlowEffects'
-import { normalizeSvgDetailId } from '../utils/svgDetailId'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const defaultLegendFilters = {
@@ -42,25 +41,8 @@ const cropStageLegendStyles = {
 }
 const irrigationMapRef = ref(null)
 const mapValueLabels = ref([])
-const detailVisible = ref(false)
-const detailInfo = ref(null)
 const legendFilters = ref({ ...defaultLegendFilters })
-
-const openDetail = async (rawId) => {
-  const payload = normalizeSvgDetailId(rawId)
-
-  if (!payload) {
-    window.alert(`無法解析圖元代碼：${rawId}`)
-    return
-  }
-
-  try {
-    detailInfo.value = await fetchDetail(payload)
-    detailVisible.value = true
-  } catch {
-    window.alert(`暫無該筆資料：${payload.type}_${payload.id}`)
-  }
-}
+const { detailVisible, detailInfo, openDetail } = useSvgDetailDialog()
 
 const getInfoClickTarget = (target) => {
   if (!target) {
@@ -229,7 +211,7 @@ onBeforeUnmount(() => {
     <el-header class="topbar">
       <div>
         <!-- <p class="eyebrow">桃園管理處 · 湖口工作站</p> -->
-        <h1>光復圳1支線灌區</h1>
+        <h1>1支線灌區</h1>
       </div>
     </el-header>
 
