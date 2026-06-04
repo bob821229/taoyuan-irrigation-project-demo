@@ -16,7 +16,7 @@ const mapSrc = computed(() => {
   const latitude = location.value.latitude
   const longitude = location.value.longitude
 
-  return `https://maps.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`
+  return `https://maps.google.com/maps?q=${latitude},${longitude}&z=16&t=k&output=embed`
 })
 </script>
 

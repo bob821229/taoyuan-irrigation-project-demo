@@ -10,16 +10,21 @@ const props = defineProps({
 })
 
 const source = computed(() => props.info.waterSource ?? {})
-const rows = computed(() => source.value.rows ?? [])
 const expandedSections = reactive({
   canal: false,
   weir: false,
   pond: false,
 })
 
-const canalRows = computed(() => rows.value.filter((row) => row.sourceType === '渠道'))
-const weirRows = computed(() => rows.value.filter((row) => row.sourceType === '河水堰'))
-const sourcePondRows = computed(() => rows.value.filter((row) => row.sourceType === '埤塘'))
+const canalSummarySource = computed(() => source.value.canalSummary ?? {})
+const weirSummarySource = computed(() => source.value.weirSummary ?? {})
+const pondSummarySource = computed(() => ({
+  unit: '萬噸',
+  ...(source.value.pondSummary ?? {}),
+}))
+
+const canalRows = computed(() => canalSummarySource.value.row ?? [])
+const weirRows = computed(() => weirSummarySource.value.row ?? [])
 
 const toPondRow = (pond, name) => ({
   name: pond.name ?? name,
@@ -30,32 +35,11 @@ const toPondRow = (pond, name) => ({
 })
 
 const pondRows = computed(() => {
-  if (Object.hasOwn(source.value, 'pondRows')) {
-    return (source.value.pondRows ?? []).map((row) => toPondRow(row, row.name))
-  }
-
-  return sourcePondRows.value.map((row) => toPondRow(row, row.sourceName))
+  return (pondSummarySource.value.row ?? []).map((row) => toPondRow(row, row.name))
 })
 
-const pondSummarySource = computed(() => {
-  if (Object.hasOwn(source.value, 'pondSummary')) {
-    return {
-      unit: '萬噸',
-      ...(source.value.pondSummary ?? {}),
-    }
-  }
-
-  return {
-    count: pondRows.value.length,
-    maxStorage: null,
-    effectiveStorage: null,
-    storageRate: null,
-    unit: '萬噸',
-  }
-})
-
-const hasCanal = computed(() => canalRows.value.length > 0)
-const hasWeir = computed(() => weirRows.value.length > 0)
+const hasWeir = computed(() => Number(weirSummarySource.value.count) > 0)
+const hasCanal = computed(() => Number(canalSummarySource.value.count) > 0)
 const hasPondSummaryCount = computed(() => (
   pondSummarySource.value.count !== null
   && pondSummarySource.value.count !== undefined
@@ -77,10 +61,10 @@ const pondSummary = computed(() => [
     <dl class="detail-list">
       <div>
         <dt>渠道數：</dt>
-        <dd>{{ canalRows.length }}<span>個</span></dd>
+        <dd>{{ canalSummarySource.count }}<span>個</span></dd>
       </div>
     </dl>
-    <div class="detail-actions">
+    <div v-if="canalRows.length" class="detail-actions">
       <el-button
         class="expand-button"
         circle
@@ -115,10 +99,10 @@ const pondSummary = computed(() => [
     <dl class="detail-list">
       <div>
         <dt>河水堰數：</dt>
-        <dd>{{ weirRows.length }}<span>個</span></dd>
+        <dd>{{ weirSummarySource.count }}<span>個</span></dd>
       </div>
     </dl>
-    <div class="detail-actions">
+    <div v-if="weirRows.length" class="detail-actions">
       <el-button
         class="expand-button"
         circle
