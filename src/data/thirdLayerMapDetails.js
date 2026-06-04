@@ -32,7 +32,7 @@ export const thirdLayerWaterStorageDetails = [
     title: '光復圳1-4號池',
     percent: 38,
     storage: 4.22,
-    maxStorage: 11.14,
+    maxStorage: 11.1,
     time: '115/05/15 16:00',
     unit: '萬噸',
   },

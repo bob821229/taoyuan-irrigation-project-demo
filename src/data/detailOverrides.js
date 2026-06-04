@@ -22,8 +22,8 @@ export const detailOverrides = {
       ponds: [
         { name: '光復圳1-1號池', maxStorage: 6.67, time: '115/05/15 16時', effectiveStorage: 3.78, storageRate: 57 },
         { name: '光復圳1-2號池', maxStorage: 9.67, time: '115/05/15 16時', effectiveStorage: 2.56, storageRate: 26 },
-        { name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 14時', effectiveStorage: 3.53, storageRate: 33 },
-        { name: '光復圳1-4號池', maxStorage: 11.14, time: '115/05/15 12時', effectiveStorage: 4.22, storageRate: 38 },
+        { name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 16時', effectiveStorage: 3.53, storageRate: 33 },
+        { name: '光復圳1-4號池', maxStorage: 11.1, time: '115/05/15 16時', effectiveStorage: 4.22, storageRate: 38 },
         { name: '...', maxStorage: '...', time: '115/05/15 10時', effectiveStorage: '...', storageRate: '...' },
         { name: '...', maxStorage: '...', time: '115/05/15 08時', effectiveStorage: '...', storageRate: '...' },
       ],
@@ -115,14 +115,14 @@ export const detailOverrides = {
         { name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false },
       ],
       pondCount: 4,
-      maxStorage: 38.04,
+      maxStorage: 38,
       effectiveStorage: 14.09,
       storageRate: 37,
       ponds: [
         { name: '光復圳1-1號池', maxStorage: 6.67, time: '115/05/15 16時', effectiveStorage: 3.78, storageRate: 57 },
         { name: '光復圳1-2號池', maxStorage: 9.67, time: '115/05/15 16時', effectiveStorage: 2.56, storageRate: 26 },
-        { name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 14時', effectiveStorage: 3.53, storageRate: 33 },
-        { name: '光復圳1-4號池', maxStorage: 11.14, time: '115/05/15 12時', effectiveStorage: 4.22, storageRate: 38 },
+        { name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 16時', effectiveStorage: 3.53, storageRate: 33 },
+        { name: '光復圳1-4號池', maxStorage: 11.1, time: '115/05/15 16時', effectiveStorage: 4.22, storageRate: 38 },
       ],
       waterSource: {
         rows: [
@@ -284,7 +284,7 @@ export const detailOverrides = {
       maxStorage: 10.56,
       effectiveStorage: 3.53,
       storageRate: 33,
-      ponds: [{ name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 14時', effectiveStorage: 3.53, storageRate: 33 }],
+      ponds: [{ name: '光復圳1-3號池', maxStorage: 10.56, time: '115/05/15 16時', effectiveStorage: 3.53, storageRate: 33 }],
       waterSource: {
         rows: [
           { sourceType: '河水堰', sourceName: '社子溪03號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
@@ -325,10 +325,10 @@ export const detailOverrides = {
       directIrrigationArea: 0,
       groups: [{ name: '光復圳1-4號池塘小組', irrigationArea: 53.41, isDirectIrrigation: false }],
       pondCount: 1,
-      maxStorage: 11.14,
+      maxStorage: 11.1,
       effectiveStorage: 4.22,
       storageRate: 38,
-      ponds: [{ name: '光復圳1-4號池', maxStorage: 11.14, time: '115/05/15 12時', effectiveStorage: 4.22, storageRate: 38 }],
+      ponds: [{ name: '光復圳1-4號池', maxStorage: 11.1, time: '115/05/15 16時', effectiveStorage: 4.22, storageRate: 38 }],
       waterSource: {
         rows: [
           { sourceType: '河水堰', sourceName: '社子溪04號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
@@ -367,12 +367,10 @@ export const detailOverrides = {
       irrigation: { area: 78.86, groupName: '光復圳1-1號池塘小組', isDirectIrrigation: false },
       irrigationSupply: {
         group: { area: 78.86, groupName: '光復圳1-1號池塘小組', isDirectIrrigation: false },
-        pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pond: { count: 1, maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57, unit: '萬噸' },
       },
-      pond: {},
+      pond: { updatedAt: '115/05/15 16時', maxStorage: 6.67, effectiveStorage: 3.78, storageRate: 57, unit: '萬噸' },
       waterSource: {
-        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
-        pondRows: [],
         rows: [
         ],
       },
@@ -390,11 +388,10 @@ export const detailOverrides = {
       irrigation: { area: 33.31, groupName: '光復圳1-2號池塘小組', isDirectIrrigation: false },
       irrigationSupply: {
         group: { area: 33.31, groupName: '光復圳1-2號池塘小組', isDirectIrrigation: false },
-        pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pond: { count: 1, maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26, unit: '萬噸' },
       },
+      pond: { updatedAt: '115/05/15 16時', maxStorage: 9.67, effectiveStorage: 2.56, storageRate: 26, unit: '萬噸' },
       waterSource: {
-        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
-        pondRows: [],
         rows: [
           { sourceType: '河水堰', sourceName: '社子溪02號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
         ],
@@ -413,11 +410,10 @@ export const detailOverrides = {
       irrigation: { area: 35.05, groupName: '光復圳1-3號池塘小組', isDirectIrrigation: false },
       irrigationSupply: {
         group: { area: 35.05, groupName: '光復圳1-3號池塘小組', isDirectIrrigation: false },
-        pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pond: { count: 1, maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33, unit: '萬噸' },
       },
+      pond: { updatedAt: '115/05/15 16時', maxStorage: 10.56, effectiveStorage: 3.53, storageRate: 33, unit: '萬噸' },
       waterSource: {
-        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
-        pondRows: [],
         rows: [
           { sourceType: '河水堰', sourceName: '社子溪03號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
         ],
@@ -436,16 +432,15 @@ export const detailOverrides = {
       irrigation: { area: 53.41, groupName: '光復圳1-4號池塘小組', isDirectIrrigation: false },
       irrigationSupply: {
         group: { area: 53.41, groupName: '光復圳1-4號池塘小組', isDirectIrrigation: false },
-        pond: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
+        pond: { count: 1, maxStorage: 11.1, effectiveStorage: 4.22, storageRate: 38, unit: '萬噸' },
       },
+      pond: { updatedAt: '115/05/15 16時', maxStorage: 11.1, effectiveStorage: 4.22, storageRate: 38, unit: '萬噸' },
       waterSource: {
-        pondSummary: { count: null, maxStorage: null, effectiveStorage: null, storageRate: null, unit: '萬噸' },
-        pondRows: [],
         rows: [
           { sourceType: '河水堰', sourceName: '社子溪04號河水堰', intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
         ],
       },
-      sensor: { name: '光復圳1-4號池', time: '115/05/15 16時', maxStorage: 11.14, effectiveStorage: 4.22, storageUnit: '萬噸', storageRate: 38 },
+      sensor: { name: '光復圳1-4號池', time: '115/05/15 16時', maxStorage: 11.1, effectiveStorage: 4.22, storageUnit: '萬噸', storageRate: 38 },
       location: {
         name: '光復圳1-4號池',
         address: '桃園管理處湖口工作站灌區',
@@ -458,7 +453,7 @@ export const detailOverrides = {
     '03009001': {
       name: '光復圳前',
       availableTabs: ['sensor', 'media', 'location'],
-      sensor: { name: '光復圳前', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms' },
+      sensor: { name: '光復圳前', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms',waterLevelAlertThreshold:1.5 },
       media: {
         images: [
           { title: 'sensor_03009001_1', url: '/images/sensor_03009001/1.png' },
@@ -474,7 +469,7 @@ export const detailOverrides = {
     '03009002': {
       name: '光復圳圓井退水門',
       availableTabs: ['sensor', 'media', 'location'],
-      sensor: { name: '光復圳圓井退水門', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 2, flowUnit: 'cms' },
+      sensor: { name: '光復圳圓井退水門', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 2, flowUnit: 'cms',waterLevelAlertThreshold:1.5 },
       media: {
         images: [
           { title: 'sensor_03009002_1', url: '/images/sensor_03009002/1.png' },
@@ -490,7 +485,7 @@ export const detailOverrides = {
     '03009005': {
       name: '光復圳1支線取水',
       availableTabs: ['sensor', 'media', 'location'],
-      sensor: { name: '光復圳1支線取水', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms' },
+      sensor: { name: '光復圳1支線取水', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms',waterLevelAlertThreshold:1.5 },
       media: {
         images: [
           { title: 'sensor_03009005_1', url: '/images/sensor_03009005/1.png' },
@@ -506,7 +501,7 @@ export const detailOverrides = {
     '03009006': {
       name: '光復圳1支線取水後',
       availableTabs: ['sensor', 'media', 'location'],
-      sensor: { name: '光復圳1支線取水後', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms' },
+      sensor: { name: '光復圳1支線取水後', time: '115/05/15 16時', waterLevel: 0.8, waterLevelUnit: 'm', flow: 0.5, flowUnit: 'cms',waterLevelAlertThreshold:1.5 },
       media: {
         images: [
           { title: 'sensor_03009006_1', url: '/images/sensor_03009006/1.png' },
@@ -542,7 +537,7 @@ export const detailOverrides = {
       },
     },
     '03009002': {
-      name: '光復圳1-社子溪02號河水堰',
+      name: '社子溪02號河水堰',
       availableTabs: ['weir', 'irrigationSupply', 'media', 'location'],
       weir: { intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
       irrigationSupply: {
@@ -588,7 +583,7 @@ export const detailOverrides = {
       weir: { intakeDirection: '左岸', riverSystem: '社子溪', branchLine: '-', waterSource: '社子溪' },
       irrigationSupply: {
         group: { area: 53.41, groupName: '光復圳1-4號池塘小組', isDirectIrrigation: false },
-        pond: { count: 1, maxStorage: 11.14, effectiveStorage: 4.22, storageRate: 38, unit: '萬噸' },
+        pond: { count: 1, maxStorage: 11.1, effectiveStorage: 4.22, storageRate: 38, unit: '萬噸' },
       },
       media: {
         images: [
@@ -626,17 +621,100 @@ export const detailOverrides = {
   },
 }
 
+const hasValue = (value) => value !== null && value !== undefined && value !== ''
+
+const hasAnyValue = (source, keys) => {
+  return keys.some((key) => hasValue(source?.[key]))
+}
+
+const normalizeIrrigation = (record) => {
+  const irrigation = {
+    ...(record.irrigation ?? {}),
+  }
+
+  if (hasAnyValue(record, [
+    'irrigationGroupCount',
+    'irrigationArea',
+    'directIrrigationGroupCount',
+    'directIrrigationArea',
+    'cropStage',
+  ]) || record.groups) {
+    irrigation.groupCount = record.irrigationGroupCount
+    irrigation.area = record.irrigationArea
+    irrigation.directGroupCount = record.directIrrigationGroupCount
+    irrigation.directArea = record.directIrrigationArea
+    irrigation.cropStage = record.cropStage
+    irrigation.groups = record.groups ?? []
+  }
+
+  return Object.keys(irrigation).length ? irrigation : undefined
+}
+
+const normalizePond = (record) => {
+  const pond = {
+    ...(record.pond ?? {}),
+  }
+
+  if (hasAnyValue(record, ['pondCount', 'maxStorage', 'effectiveStorage', 'storageRate']) || record.ponds) {
+    pond.count = record.pondCount
+    pond.maxStorage = record.maxStorage
+    pond.effectiveStorage = record.effectiveStorage
+    pond.storageRate = record.storageRate
+    pond.unit = pond.unit ?? '萬噸'
+    pond.rows = record.ponds ?? []
+  }
+
+  return Object.keys(pond).length ? pond : undefined
+}
+
+const normalizeWaterSource = (record) => {
+  const waterSource = {
+    ...(record.waterSource ?? {}),
+  }
+
+  return Object.keys(waterSource).length ? waterSource : undefined
+}
+
+const normalizeIrrigationSupply = (record) => {
+  if (!record.irrigationSupply) {
+    return undefined
+  }
+
+  return {
+    group: record.irrigationSupply.group,
+    pond: record.irrigationSupply.pond,
+  }
+}
+
+const normalizeDetailRecord = ({ type, id, record }) => {
+  const irrigation = normalizeIrrigation(record)
+  const pond = normalizePond(record)
+  const waterSource = normalizeWaterSource(record)
+  const irrigationSupply = normalizeIrrigationSupply(record)
+
+  return {
+    name: record.name,
+    availableTabs: record.availableTabs,
+    ...(irrigation ? { irrigation } : {}),
+    ...(pond ? { pond } : {}),
+    ...(record.weir ? { weir: record.weir } : {}),
+    ...(irrigationSupply ? { irrigationSupply } : {}),
+    ...(waterSource ? { waterSource } : {}),
+    ...(record.crop ? { crop: record.crop } : {}),
+    ...(record.sensor ? { sensor: record.sensor } : {}),
+    ...(record.media ? { media: record.media } : {}),
+    ...(record.location ? { location: record.location } : {}),
+    ...(record.monitor ? { monitor: record.monitor } : {}),
+    rawId: record.rawId ?? `${type}_${id}`,
+    type,
+    id,
+    detailKey: `${type}_${id}`,
+  }
+}
+
 export const detailMockRecords = Object.entries(detailOverrides).flatMap(([type, recordsById]) => {
   return Object.entries(recordsById).map(([id, record]) => {
-    const payload = { type, id }
-
-    return {
-      ...record,
-      rawId: record.rawId ?? `${type}_${id}`,
-      type,
-      id,
-      detailKey: `${payload.type}_${payload.id}`,
-    }
+    return normalizeDetailRecord({ type, id, record })
   })
 })
 

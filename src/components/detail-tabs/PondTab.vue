@@ -29,10 +29,10 @@ const hasSinglePondInfo = computed(() => {
 
 const hasAggregatePondInfo = computed(() => {
   return [
-    props.info.pondCount,
-    props.info.maxStorage,
-    props.info.effectiveStorage,
-    props.info.storageRate,
+    pondInfo.value?.count,
+    pondInfo.value?.maxStorage,
+    pondInfo.value?.effectiveStorage,
+    pondInfo.value?.storageRate,
   ].some(hasValue)
 })
 
@@ -48,10 +48,10 @@ const summary = computed(() => {
 
   if (hasAggregatePondInfo.value) {
     return [
-      createSummaryItem('埤塘數量：', props.info.pondCount, '口'),
-      createSummaryItem('總最大蓄水量：', props.info.maxStorage, '萬噸'),
-      createSummaryItem('總有效蓄水量：', props.info.effectiveStorage, '萬噸'),
-      createSummaryItem('總蓄水率：', props.info.storageRate, '%'),
+      createSummaryItem('埤塘數量：', pondInfo.value.count, '口'),
+      createSummaryItem('總最大蓄水量：', pondInfo.value.maxStorage, pondInfo.value.unit ?? '萬噸'),
+      createSummaryItem('總有效蓄水量：', pondInfo.value.effectiveStorage, pondInfo.value.unit ?? '萬噸'),
+      createSummaryItem('總蓄水率：', pondInfo.value.storageRate, '%'),
     ]
   }
 
@@ -59,7 +59,7 @@ const summary = computed(() => {
 })
 
 const rows = computed(() => {
-  return (props.info.ponds ?? []).map((pond) => [
+  return (pondInfo.value?.rows ?? []).map((pond) => [
     pond.name,
     formatValue(pond.maxStorage),
     formatValue(pond.time),

@@ -19,6 +19,7 @@ const expandedSections = reactive({
 
 const canalRows = computed(() => rows.value.filter((row) => row.sourceType === '渠道'))
 const weirRows = computed(() => rows.value.filter((row) => row.sourceType === '河水堰'))
+const sourcePondRows = computed(() => rows.value.filter((row) => row.sourceType === '埤塘'))
 
 const toPondRow = (pond, name) => ({
   name: pond.name ?? name,
@@ -33,28 +34,8 @@ const pondRows = computed(() => {
     return (source.value.pondRows ?? []).map((row) => toPondRow(row, row.name))
   }
 
-  if (props.info.pond) {
-    return [toPondRow(props.info.pond, props.info.name)]
-  }
-
-  return (props.info.ponds ?? []).map((pond) => toPondRow(pond, pond.name))
+  return sourcePondRows.value.map((row) => toPondRow(row, row.sourceName))
 })
-
-const toNumber = (value) => {
-  const numberValue = Number(value)
-
-  return Number.isFinite(numberValue) ? numberValue : null
-}
-
-const sumPondRows = (field) => {
-  const values = pondRows.value.map((row) => toNumber(row[field]))
-
-  if (!values.length || values.some((value) => value === null)) {
-    return null
-  }
-
-  return values.reduce((sum, value) => sum + value, 0)
-}
 
 const pondSummarySource = computed(() => {
   if (Object.hasOwn(source.value, 'pondSummary')) {
@@ -64,17 +45,11 @@ const pondSummarySource = computed(() => {
     }
   }
 
-  const maxStorage = sumPondRows('maxStorage')
-  const effectiveStorage = sumPondRows('effectiveStorage')
-  const storageRate = maxStorage && effectiveStorage !== null
-    ? Math.round((effectiveStorage / maxStorage) * 100)
-    : null
-
   return {
     count: pondRows.value.length,
-    maxStorage,
-    effectiveStorage,
-    storageRate,
+    maxStorage: null,
+    effectiveStorage: null,
+    storageRate: null,
     unit: '萬噸',
   }
 })
@@ -84,6 +59,7 @@ const hasWeir = computed(() => weirRows.value.length > 0)
 const hasPondSummaryCount = computed(() => (
   pondSummarySource.value.count !== null
   && pondSummarySource.value.count !== undefined
+  && Number(pondSummarySource.value.count) > 0
 ))
 const hasPond = computed(() => hasPondSummaryCount.value || pondRows.value.length > 0)
 

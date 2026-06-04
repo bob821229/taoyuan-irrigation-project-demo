@@ -258,9 +258,10 @@ watch(
 .legend-info {
   width: 20px;
   height: 20px;
-  border: 1px solid #111111;
+  border: 1px solid #86c24e;
   border-radius: 50%;
-  color: #111111;
+  background: #86c24e;
+  color: #f0f5e7;
   font-family: Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;

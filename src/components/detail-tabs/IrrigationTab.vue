@@ -10,23 +10,24 @@ const props = defineProps({
 })
 
 const expanded = ref(false)
+const irrigation = computed(() => props.info.irrigation ?? {})
 
 const isSingleIrrigationGroup = computed(() => {
-  return props.info.irrigationGroupCount === 1 && (props.info.groups?.length ?? 0) === 1
+  return irrigation.value.groupCount === 1 && (irrigation.value.groups?.length ?? 0) === 1
 })
 
 const isDirectIrrigationGroup = computed(() => {
-  return props.info.groups?.[0]?.isDirectIrrigation || props.info.directIrrigationGroupCount > 0
+  return irrigation.value.groups?.[0]?.isDirectIrrigation || irrigation.value.directGroupCount > 0
 })
 
 const summary = computed(() => {
-  if (props.info.irrigation && !props.info.groups) {
+  if (irrigation.value.groupName && !irrigation.value.groups) {
     return [
-      createSummaryItem('灌區名稱：', props.info.irrigation.groupName ?? props.info.name),
+      createSummaryItem('灌區名稱：', irrigation.value.groupName ?? props.info.name),
       createSummaryItem(
         '灌溉面積：',
-        props.info.irrigation.area,
-        props.info.irrigation.isDirectIrrigation ? '公頃(直灌區)' : '公頃',
+        irrigation.value.area,
+        irrigation.value.isDirectIrrigation ? '公頃(直灌區)' : '公頃',
       ),
     ]
   }
@@ -35,22 +36,22 @@ const summary = computed(() => {
     return [
       createSummaryItem(
         '灌溉面積：',
-        props.info.irrigationArea,
+        irrigation.value.area,
         isDirectIrrigationGroup.value ? '公頃(直灌區)' : '公頃',
       ),
     ]
   }
 
   return [
-    createSummaryItem('小組數：', props.info.irrigationGroupCount, '個'),
-    createSummaryItem('灌溉面積：', props.info.irrigationArea, '公頃'),
-    createSummaryItem('直灌小組數：', props.info.directIrrigationGroupCount, '個'),
-    createSummaryItem('直灌面積：', props.info.directIrrigationArea, '公頃'),
+    createSummaryItem('小組數：', irrigation.value.groupCount, '個'),
+    createSummaryItem('灌溉面積：', irrigation.value.area, '公頃'),
+    createSummaryItem('直灌小組數：', irrigation.value.directGroupCount, '個'),
+    createSummaryItem('直灌面積：', irrigation.value.directArea, '公頃'),
   ]
 })
 
 const rows = computed(() => {
-  return (props.info.groups ?? []).map((group) => [
+  return (irrigation.value.groups ?? []).map((group) => [
     group.name,
     formatValue(group.irrigationArea),
     formatBoolean(group.isDirectIrrigation),

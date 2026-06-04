@@ -17,7 +17,7 @@ const irrigation = computed(() => {
     return props.info.irrigationSupply.group
   }
 
-  return props.info.irrigation ?? {}
+  return {}
 })
 
 const pond = computed(() => {
@@ -25,7 +25,7 @@ const pond = computed(() => {
     return props.info.irrigationSupply.pond
   }
 
-  return props.info.pond ?? {}
+  return {}
 })
 
 const hasGroupSection = computed(() => hasValue(irrigation.value?.area))

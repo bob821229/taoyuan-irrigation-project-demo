@@ -26,7 +26,7 @@ const seasonValues = (values) => {
 }
 
 const summary = computed(() => [
-  createSummaryItem('小組數：', crop.value.groupCount ?? props.info.irrigationGroupCount, '個'),
+  createSummaryItem('小組數：', crop.value.groupCount, '個'),
   createSummaryItem(
     `近期(${crop.value.floodedAreaDate})農地湛水面積：`,
     crop.value.recentFloodedArea,
