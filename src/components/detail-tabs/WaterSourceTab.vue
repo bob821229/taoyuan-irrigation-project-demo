@@ -18,10 +18,7 @@ const expandedSections = reactive({
 
 const canalSummarySource = computed(() => source.value.canalSummary ?? {})
 const weirSummarySource = computed(() => source.value.weirSummary ?? {})
-const pondSummarySource = computed(() => ({
-  unit: '萬噸',
-  ...(source.value.pondSummary ?? {}),
-}))
+const pondSummarySource = computed(() => source.value.pondSummary ?? {})
 
 const canalRows = computed(() => canalSummarySource.value.row ?? [])
 const weirRows = computed(() => weirSummarySource.value.row ?? [])
@@ -49,8 +46,8 @@ const hasPond = computed(() => hasPondSummaryCount.value || pondRows.value.lengt
 
 const pondSummary = computed(() => [
   createSummaryItem('埤塘數：', pondSummarySource.value.count, '口'),
-  createSummaryItem('最大蓄水量：', pondSummarySource.value.maxStorage, pondSummarySource.value.unit ?? '萬噸'),
-  createSummaryItem('有效蓄水量：', pondSummarySource.value.effectiveStorage, pondSummarySource.value.unit ?? '萬噸'),
+  createSummaryItem('最大蓄水量：', pondSummarySource.value.maxStorage, '萬噸'),
+  createSummaryItem('有效蓄水量：', pondSummarySource.value.effectiveStorage, '萬噸'),
   createSummaryItem('蓄水率：', pondSummarySource.value.storageRate, '%'),
 ])
 </script>

@@ -32,17 +32,17 @@ const isFlowAlert = computed(() => {
     </div>
     <div>
       <dt>水位：</dt>
-      <dd>{{ formatValue(sensor.waterLevel) }}<span>{{ sensor.waterLevelUnit }}</span></dd>
+      <dd>{{ formatValue(sensor.waterLevel) }}<span>m</span></dd>
     </div>
     <div :class="{ 'is-alert': isFlowAlert }">
       <dt>流量：</dt>
-      <dd>{{ formatValue(sensor.flow) }}<span>{{ sensor.flowUnit }}</span></dd>
+      <dd>{{ formatValue(sensor.flow) }}<span>cms</span></dd>
     </div>
     <div v-if="isFlowAlert" class="is-alert">
       <dt>異常說明：</dt>
       <dd>
         流量超過{{ formatValue(sensor.waterLevelAlertThreshold) }}
-        <span>{{ sensor.flowUnit }}</span>
+        <span>cms</span>
       </dd>
     </div>
   </dl>
@@ -58,11 +58,11 @@ const isFlowAlert = computed(() => {
     </div>
     <div>
       <dt>最大蓄水量：</dt>
-      <dd>{{ formatValue(sensor.maxStorage) }}<span>{{ sensor.storageUnit }}</span></dd>
+      <dd>{{ formatValue(sensor.maxStorage) }}<span>萬噸</span></dd>
     </div>
     <div>
       <dt>有效蓄水量：</dt>
-      <dd>{{ formatValue(sensor.effectiveStorage) }}<span>{{ sensor.storageUnit }}</span></dd>
+      <dd>{{ formatValue(sensor.effectiveStorage) }}<span>萬噸</span></dd>
     </div>
     <div>
       <dt>蓄水率：</dt>

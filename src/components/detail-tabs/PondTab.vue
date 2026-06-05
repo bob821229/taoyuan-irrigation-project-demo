@@ -40,8 +40,8 @@ const summary = computed(() => {
   if (hasSinglePondInfo.value) {
     return [
       createSummaryItem('資料時間：', pondInfo.value.updatedAt),
-      createSummaryItem('最大蓄水量：', pondInfo.value.maxStorage, pondInfo.value.unit ?? '萬噸'),
-      createSummaryItem('有效蓄水量：', pondInfo.value.effectiveStorage, pondInfo.value.unit ?? '萬噸'),
+      createSummaryItem('最大蓄水量：', pondInfo.value.maxStorage, '萬噸'),
+      createSummaryItem('有效蓄水量：', pondInfo.value.effectiveStorage, '萬噸'),
       createSummaryItem('蓄水率：', pondInfo.value.storageRate, '%'),
     ]
   }
@@ -49,8 +49,8 @@ const summary = computed(() => {
   if (hasAggregatePondInfo.value) {
     return [
       createSummaryItem('埤塘數量：', pondInfo.value.count, '口'),
-      createSummaryItem('總最大蓄水量：', pondInfo.value.maxStorage, pondInfo.value.unit ?? '萬噸'),
-      createSummaryItem('總有效蓄水量：', pondInfo.value.effectiveStorage, pondInfo.value.unit ?? '萬噸'),
+      createSummaryItem('總最大蓄水量：', pondInfo.value.maxStorage, '萬噸'),
+      createSummaryItem('總有效蓄水量：', pondInfo.value.effectiveStorage, '萬噸'),
       createSummaryItem('總蓄水率：', pondInfo.value.storageRate, '%'),
     ]
   }
