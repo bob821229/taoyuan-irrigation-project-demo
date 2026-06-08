@@ -9,22 +9,22 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-1號池塘小組",
+                    name: "光復圳1-1號池小組",
                     irrigationArea: 78.86,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-2號池塘小組",
+                    name: "光復圳1-2號池小組",
                     irrigationArea: 33.31,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-3號池塘小組",
+                    name: "光復圳1-3號池小組",
                     irrigationArea: 35.05,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-4號池塘小組",
+                    name: "光復圳1-4號池小組",
                     irrigationArea: 53.41,
                     isDirectIrrigation: false,
                 },
@@ -161,7 +161,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-1號池塘小組",
+                        name: "光復圳1-1號池小組",
                         floodedArea: 20,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -171,7 +171,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-2號池塘小組",
+                        name: "光復圳1-2號池小組",
                         floodedArea: 18,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -181,7 +181,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-3號池塘小組",
+                        name: "光復圳1-3號池小組",
                         floodedArea: 15,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -191,7 +191,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-4號池塘小組",
+                        name: "光復圳1-4號池小組",
                         floodedArea: 33,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -241,22 +241,22 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-1號池塘小組",
+                    name: "光復圳1-1號池小組",
                     irrigationArea: 78.86,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-2號池塘小組",
+                    name: "光復圳1-2號池小組",
                     irrigationArea: 33.31,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-3號池塘小組",
+                    name: "光復圳1-3號池小組",
                     irrigationArea: 35.05,
                     isDirectIrrigation: false,
                 },
                 {
-                    name: "光復圳1-4號池塘小組",
+                    name: "光復圳1-4號池小組",
                     irrigationArea: 53.41,
                     isDirectIrrigation: false,
                 },
@@ -369,7 +369,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-1號池塘小組",
+                        name: "光復圳1-1號池小組",
                         floodedArea: 20,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -379,7 +379,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-2號池塘小組",
+                        name: "光復圳1-2號池小組",
                         floodedArea: 18,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -389,7 +389,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-3號池塘小組",
+                        name: "光復圳1-3號池小組",
                         floodedArea: 15,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -399,7 +399,7 @@ export const detailOverrides = {
                         agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
                     },
                     {
-                        name: "光復圳1-4號池塘小組",
+                        name: "光復圳1-4號池小組",
                         floodedArea: 33,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -429,7 +429,7 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-1號池塘小組",
+                    name: "光復圳1-1號池小組",
                     irrigationArea: 78.86,
                     isDirectIrrigation: false,
                 },
@@ -451,11 +451,19 @@ export const detailOverrides = {
                 canalSummary: { count: 0, row: [] },
                 weirSummary: { count: 0, row: [] },
                 pondSummary: {
-                    count: 0,
-                    maxStorage: null,
-                    effectiveStorage: null,
-                    storageRate: null,
-                    row: [],
+                    count: 1,
+                    maxStorage: 6.67,
+                    effectiveStorage: 3.78,
+                    storageRate: 57,
+                    row: [
+                        {
+                            name: "光復圳1-1號池",
+                            time: "115/05/15 16時",
+                            maxStorage: 6.67,
+                            effectiveStorage: 3.78,
+                            storageRate: 57,
+                        }
+                    ],
                 },
             },
             crop: {
@@ -467,7 +475,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-1號池塘小組",
+                        name: "光復圳1-1號池小組",
                         floodedArea: 20,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -495,7 +503,7 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-2號池塘小組",
+                    name: "光復圳1-2號池小組",
                     irrigationArea: 33.31,
                     isDirectIrrigation: false,
                 },
@@ -552,7 +560,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-2號池塘小組",
+                        name: "光復圳1-2號池小組",
                         floodedArea: 20,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -580,7 +588,7 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-3號池塘小組",
+                    name: "光復圳1-3號池小組",
                     irrigationArea: 35.05,
                     isDirectIrrigation: false,
                 },
@@ -637,7 +645,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-3號池塘小組",
+                        name: "光復圳1-3號池小組",
                         floodedArea: 20,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -665,7 +673,7 @@ export const detailOverrides = {
             directIrrigationArea: 0,
             groups: [
                 {
-                    name: "光復圳1-4號池塘小組",
+                    name: "光復圳1-4號池小組",
                     irrigationArea: 53.41,
                     isDirectIrrigation: false,
                 },
@@ -722,7 +730,7 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-4號池塘小組",
+                        name: "光復圳1-4號池小組",
                         floodedArea: 53.41,
                         researchFirstSeason: [
                             15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
@@ -753,7 +761,7 @@ export const detailOverrides = {
             ],
             irrigation: {
                 area: 78.86,
-                groupName: "光復圳1-1號池塘小組",
+                groupName: "光復圳1-1號池小組",
                 isDirectIrrigation: false,
             },
             irrigationSupply: {
@@ -764,7 +772,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-1號池塘小組",
+                            name: "光復圳1-1號池小組",
                             irrigationArea: 78.86,
                             isDirectIrrigation: false,
                         },
@@ -785,7 +793,9 @@ export const detailOverrides = {
                 storageRate: 57,
             },
             waterSource: {
-                canalSummary: { count: 0, row: [] },
+                canalSummary: { count: 1, row: [
+                     { sourceName: "光復圳1支線" }
+                ] },
                 weirSummary: { count: 0, row: [] },
                 pondSummary: {
                     count: 0,
@@ -820,7 +830,7 @@ export const detailOverrides = {
             ],
             irrigation: {
                 area: 33.31,
-                groupName: "光復圳1-2號池塘小組",
+                groupName: "光復圳1-2號池小組",
                 isDirectIrrigation: false,
             },
             irrigationSupply: {
@@ -831,7 +841,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-2號池塘小組",
+                            name: "光復圳1-2號池小組",
                             irrigationArea: 33.31,
                             isDirectIrrigation: false,
                         },
@@ -852,7 +862,9 @@ export const detailOverrides = {
                 storageRate: 26,
             },
             waterSource: {
-                canalSummary: { count: 0, row: [] },
+                canalSummary: { count: 1, row: [
+                     { sourceName: "光復圳1支線" }
+                ] },
                 weirSummary: {
                     count: 1,
                     row: [
@@ -898,7 +910,7 @@ export const detailOverrides = {
             ],
             irrigation: {
                 area: 35.05,
-                groupName: "光復圳1-3號池塘小組",
+                groupName: "光復圳1-3號池小組",
                 isDirectIrrigation: false,
             },
             irrigationSupply: {
@@ -909,7 +921,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-3號池塘小組",
+                            name: "光復圳1-3號池小組",
                             irrigationArea: 35.05,
                             isDirectIrrigation: false,
                         },
@@ -930,12 +942,14 @@ export const detailOverrides = {
                 storageRate: 33,
             },
             waterSource: {
-                canalSummary: { count: 0, row: [] },
+                canalSummary: { count: 1, row: [
+                     { sourceName: "光復圳1支線" }
+                ] },
                 weirSummary: {
                     count: 1,
                     row: [
                         {
-                            sourceName: "社子溪03號河水堰",
+                            sourceName: "社子溪02號河水堰",
                             intakeDirection: "左岸",
                             riverSystem: "社子溪",
                             branchLine: "-",
@@ -976,7 +990,7 @@ export const detailOverrides = {
             ],
             irrigation: {
                 area: 53.41,
-                groupName: "光復圳1-4號池塘小組",
+                groupName: "光復圳1-4號池小組",
                 isDirectIrrigation: false,
             },
             irrigationSupply: {
@@ -987,7 +1001,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-4號池塘小組",
+                            name: "光復圳1-4號池小組",
                             irrigationArea: 53.41,
                             isDirectIrrigation: false,
                         },
@@ -1008,12 +1022,14 @@ export const detailOverrides = {
                 storageRate: 38,
             },
             waterSource: {
-                canalSummary: { count: 0, row: [] },
+                canalSummary: { count: 1, row: [
+                     { sourceName: "光復圳1支線" }
+                ] },
                 weirSummary: {
                     count: 1,
                     row: [
                         {
-                            sourceName: "社子溪04號河水堰",
+                            sourceName: "社子溪02號河水堰",
                             intakeDirection: "左岸",
                             riverSystem: "社子溪",
                             branchLine: "-",
@@ -1205,7 +1221,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-2號池塘小組",
+                            name: "光復圳1-2號池小組",
                             irrigationArea: 33.31,
                             isDirectIrrigation: false,
                         },
@@ -1273,7 +1289,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-3號池塘小組",
+                            name: "光復圳1-3號池小組",
                             irrigationArea: 35.05,
                             isDirectIrrigation: false,
                         },
@@ -1323,7 +1339,7 @@ export const detailOverrides = {
                     directArea: 0,
                     row: [
                         {
-                            name: "光復圳1-4號池塘小組",
+                            name: "光復圳1-4號池小組",
                             irrigationArea: 53.41,
                             isDirectIrrigation: false,
                         },

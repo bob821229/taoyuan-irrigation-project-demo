@@ -88,7 +88,7 @@ const rows = computed(() => {
       <thead>
         <tr>
           <th>序號</th>
-          <th>名稱</th>
+          <th>小組名稱</th>
           <th>灌溉面積(公頃)</th>
           <th>是否為直灌區</th>
         </tr>

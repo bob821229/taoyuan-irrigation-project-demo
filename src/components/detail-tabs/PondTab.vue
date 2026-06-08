@@ -99,7 +99,7 @@ const rows = computed(() => {
       <thead>
         <tr>
           <th>序號</th>
-          <th>名稱</th>
+          <th>埤塘名稱</th>
           <th>最大蓄水量(萬噸)</th>
           <th>資料時間</th>
           <th>有效蓄水量(萬噸)</th>

@@ -33,14 +33,14 @@ const summary = computed(() => [
     '公頃',
   ),
   {
-    label: '近五年農試所農地土地水稻平均面積：',
+    label: '近5年農試所農地土地水稻平均面積：',
     lines: [
       createSeasonLine('一期作', crop.value.researchAverage?.firstSeason),
       createSeasonLine('二期作', crop.value.researchAverage?.secondSeason),
     ],
   },
   {
-    label: '近五年農糧署水稻核定平均面積：',
+    label: '近5年農糧署水稻核定平均面積：',
     lines: [
       createSeasonLine('一期作', crop.value.agencyAverage?.firstSeason),
       createSeasonLine('二期作', crop.value.agencyAverage?.secondSeason),
@@ -111,14 +111,14 @@ const rows = computed(() => {
       <thead>
         <tr>
           <th rowspan="3">序號</th>
-          <th rowspan="3">名稱</th>
+          <th rowspan="3">小組名稱</th>
           <th rowspan="3">
             <span class="table-header-line">{{ crop.floodedAreaDate }}</span>
             <span class="table-header-line">湛水面積</span>
             <span class="table-header-line">(公頃)</span>
           </th>
           <th :colspan="yearCount * 2">近 5 年農試所農地土地水稻面積</th>
-          <th :colspan="yearCount * 2">近 5 年農糧署申報核定水稻面積</th>
+          <th :colspan="yearCount * 2">近 5 年農糧署核定水稻面積</th>
         </tr>
         <tr>
           <th :colspan="yearCount">一期作</th>

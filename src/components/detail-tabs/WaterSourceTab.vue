@@ -78,7 +78,7 @@ const pondSummary = computed(() => [
         <thead>
           <tr>
             <th>序號</th>
-            <th>名稱</th>
+            <th>渠道名稱</th>
           </tr>
         </thead>
         <tbody>
@@ -166,11 +166,11 @@ const pondSummary = computed(() => [
         <thead>
           <tr>
             <th>序號</th>
-            <th>名稱</th>
+            <th>埤塘名稱</th>
             <th>資料時間</th>
-            <th>最大蓄水量</th>
-            <th>有效蓄水量</th>
-            <th>蓄水率</th>
+            <th>最大蓄水量(萬噸)</th>
+            <th>有效蓄水量(萬噸)</th>
+            <th>蓄水率(%)</th>
           </tr>
         </thead>
         <tbody>
