@@ -1,6 +1,7 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第三層_光復圳1支線灌區-12.svg?raw'
+import LayerNavigation from '../components/LayerNavigation.vue'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
 import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
@@ -216,6 +217,9 @@ onBeforeUnmount(() => {
     </el-header>
 
     <el-main class="content">
+      <div class="page-toolbar">
+        <LayerNavigation current-layer="guangfu-1" />
+      </div>
       <section class="map-stage" aria-label="光復圳1支線灌區 SVG 展示">
         <div class="map-canvas">
           <div

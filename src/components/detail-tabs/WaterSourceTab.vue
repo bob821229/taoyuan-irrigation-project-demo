@@ -54,7 +54,7 @@ const pondSummary = computed(() => [
 
 <template>
   <section v-if="hasCanal" class="detail-section">
-    <h3>來自於渠道直灌</h3>
+    <h3>來自於渠道</h3>
     <dl class="detail-list">
       <div>
         <dt>渠道數：</dt>
@@ -92,7 +92,7 @@ const pondSummary = computed(() => [
   </section>
 
   <section v-if="hasWeir" class="detail-section">
-    <h3>來自於河水堰直灌</h3>
+    <h3>來自於河水堰</h3>
     <dl class="detail-list">
       <div>
         <dt>河水堰數：</dt>

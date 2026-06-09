@@ -2,6 +2,7 @@
 import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第二層_湖口工作站灌區-13.svg?raw'
+import LayerNavigation from '../components/LayerNavigation.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
 import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
 import { applySvgFlowEffects } from '../utils/svgFlowEffects'
@@ -50,6 +51,9 @@ onMounted(async () => {
     </el-header>
 
     <el-main class="content">
+      <div class="page-toolbar">
+        <LayerNavigation current-layer="hukou" />
+      </div>
       <section class="map-stage" aria-label="湖口工作站灌區 SVG 展示">
         <div class="map-canvas">
           <div
