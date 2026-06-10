@@ -4,7 +4,6 @@ const DEFAULT_FLOW_DURATION = '1.1s'
 const FLOW_DIRECTIONS = new Set(['up', 'down', 'left', 'right', 'forward', 'reverse'])
 const FLOW_SHAPE_SELECTOR = 'line, path, polygon, polyline, rect'
 const NON_RENDERED_SVG_TAGS = new Set(['defs', 'desc', 'metadata', 'style', 'title'])
-const DIRECT_SVG_CHILD_TAGS = new Set(['g', 'line', 'path', 'polygon', 'polyline', 'rect'])
 
 export const getSvgFlowDirection = (element) => {
   const rawName = [
@@ -225,36 +224,15 @@ const getOrCreateFlowLayer = (svg, flowClass) => {
   layer.classList.add(layerClass)
   layer.setAttribute('aria-hidden', 'true')
 
-  svg.insertBefore(layer, getFirstRenderedSvgChild(svg) ?? null)
+  const firstRenderedChild = getFirstRenderedSvgChild(svg)
 
-  return layer
-}
-
-const getDirectSvgChild = (element, svg) => {
-  let current = element
-
-  while (current?.parentElement && current.parentElement !== svg) {
-    current = current.parentElement
+  if (firstRenderedChild?.nextSibling) {
+    svg.insertBefore(layer, firstRenderedChild.nextSibling)
+  } else {
+    svg.append(layer)
   }
 
-  return current?.parentElement === svg && DIRECT_SVG_CHILD_TAGS.has(current.tagName.toLowerCase())
-    ? current
-    : null
-}
-
-const moveFlowRootsToLayer = (flowTargets, svg, flowLayer) => {
-  const movedRoots = new WeakSet()
-
-  flowTargets.forEach(({ element }) => {
-    const root = getDirectSvgChild(element, svg)
-
-    if (!root || movedRoots.has(root) || root === flowLayer) {
-      return
-    }
-
-    movedRoots.add(root)
-    flowLayer.append(root)
-  })
+  return layer
 }
 
 const isFlowShape = (element) => element.matches(FLOW_SHAPE_SELECTOR)
@@ -337,10 +315,6 @@ export const applySvgFlowEffects = (
   const shouldKeepRiverBelowContent = keepBelowContent ?? keepRiverBelowContent
   const flowLayer = shouldKeepRiverBelowContent ? getOrCreateFlowLayer(svg, flowClass) : null
 
-  if (flowLayer) {
-    moveFlowRootsToLayer(flowTargets, svg, flowLayer)
-  }
-
   flowTargets.forEach(({ element, directionSource }) => {
     const direction = getSvgFlowDirection(directionSource)
     const segment = createFlowSegment(element, direction)
@@ -353,6 +327,10 @@ export const applySvgFlowEffects = (
     segment.style.setProperty('--svg-flow-duration', duration)
     segment.setAttribute('aria-hidden', 'true')
 
-    element.after(segment)
+    if (flowLayer) {
+      flowLayer.append(segment)
+    } else {
+      element.after(segment)
+    }
   })
 }
