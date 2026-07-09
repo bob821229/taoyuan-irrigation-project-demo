@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   info: {
@@ -39,6 +39,7 @@ const formatApprovedWaterRightPeriod = (startDate, endDate) => {
 }
 
 const hasWaterRightNumber = computed(() => hasValue(weir.value.waterRightNumber))
+const waterUseAreaDialogVisible = ref(false)
 
 const basicSummary = computed(() => [
   { label: '取水方向：', value: formatBlankValue(weir.value.intakeDirection) },
@@ -70,7 +71,11 @@ const waterRightSummary = computed(() => {
     },
     { label: '用水標的：', value: formatBlankValue(weir.value.waterUsePurpose) },
     { label: '引用水源：', value: formatBlankValue(weir.value.referencedWaterSource ?? weir.value.waterSource) },
-    { label: '用水範圍：', value: formatBlankValue(weir.value.waterUseArea) },
+    {
+      label: '用水範圍：',
+      value: formatBlankValue(weir.value.waterUseArea),
+      action: 'waterUseArea',
+    },
     { label: '使用方法：', value: formatBlankValue(weir.value.waterUseMethod) },
     { label: '引水地點：', value: formatBlankValue(weir.value.intakeLocation) },
     { label: '退水地點：', value: weir.value.returnWaterLocation ?? '' },
@@ -126,9 +131,22 @@ const monthlyWaterUseRowDefinitions = [
   <dl class="detail-list">
     <div v-for="item in summaryBeforeMonthlyWaterUse" :key="item.label">
       <dt>{{ item.label }}</dt>
-      <dd>
-        {{ item.value }}
-        <span v-if="item.unit">{{ item.unit }}</span>
+      <dd :class="{ 'detail-action-value': item.action === 'waterUseArea' }">
+        <template v-if="item.action === 'waterUseArea'">
+          <span class="detail-value-text">{{ item.value }}</span>
+          <el-button
+            class="water-use-area-button"
+            type="primary"
+            plain
+            @click="waterUseAreaDialogVisible = true"
+          >
+            展示用水範圍
+          </el-button>
+        </template>
+        <template v-else>
+          {{ item.value }}
+          <span v-if="item.unit">{{ item.unit }}</span>
+        </template>
       </dd>
     </div>
   </dl>
@@ -165,4 +183,27 @@ const monthlyWaterUseRowDefinitions = [
       </dd>
     </div>
   </dl>
+
+  <el-dialog
+    v-model="waterUseAreaDialogVisible"
+    class="water-use-area-dialog"
+    title="展示用水範圍"
+    width="min(760px, calc(100vw - 32px))"
+    append-to-body
+  >
+    <p class="water-use-area-description">
+      {{ formatBlankValue(weir.waterUseArea) }}
+    </p>
+    <div class="water-use-area-map" aria-label="用水範圍示意圖">
+      <svg viewBox="0 0 640 360" role="img" aria-label="用水範圍多邊形示意">
+        <rect width="640" height="360" rx="14" />
+        <path class="water-use-area-river" d="M-20 255 C 100 210, 160 300, 280 248 S 470 178, 660 220" />
+        <polygon
+          class="water-use-area-polygon"
+          points="222,92 442,116 492,242 340,300 184,226"
+        />
+        <circle class="water-use-area-point" cx="270" cy="178" r="8" />
+      </svg>
+    </div>
+  </el-dialog>
 </template>

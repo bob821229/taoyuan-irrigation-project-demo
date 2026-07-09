@@ -13,7 +13,7 @@ const expanded = ref(false)
 const crop = computed(() => props.info.crop ?? {})
 const years = computed(() => crop.value.years ?? [])
 const yearCount = computed(() => years.value.length)
-const agencyAverageNote = computed(() => crop.value.agencyAverageNote ?? '備註:不包含未申報公糧之面積')
+const agencyAverageNote = computed(() => crop.value.agencyAverageNote ?? '不包含未申報公糧之面積')
 
 const formatCropValue = (value) => {
   if (value === null || value === undefined || value === '') {

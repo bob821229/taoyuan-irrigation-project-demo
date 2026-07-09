@@ -556,16 +556,6 @@ export const detailOverrides = {
                 years: ["111", "112", "113", "114", "115", "平均"],
                 rows: [
                     {
-                        name: "光復圳1-1號池小組",
-                        floodedArea: 20,
-                        researchFirstSeason: [
-                            15.6, 14.1, 16.8, 13.9, 12.7, 15.0,
-                        ],
-                        researchSecondSeason: [4.9, 4.5, 5.8, 3.8, 5.9, 5.0],
-                        agencyFirstSeason: [13.1, 15.6, 12.7, 12.5, 16.5, 15.0],
-                        agencySecondSeason: [4.9, 13.7, 16.8, 14.2, 15.4, 5.0],
-                    },
-                    {
                         name: "光復圳1-2號池小組",
                         floodedArea: 18,
                         researchFirstSeason: [
@@ -1913,7 +1903,7 @@ const normalizeCrop = (record) => {
     }
 
     return {
-        agencyAverageNote: "備註:不包含未申報公糧之面積",
+        agencyAverageNote: "不包含未申報公糧之面積",
         ...record.crop,
     };
 };

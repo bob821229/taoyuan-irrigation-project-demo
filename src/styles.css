@@ -386,15 +386,87 @@ h1 {
   letter-spacing: 0;
 }
 
+.detail-list .detail-action-value {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-value-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.water-use-area-button {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .detail-list span {
   margin-left: 4px;
   font-size: 22px;
   font-weight: 400;
 }
 
+.detail-list .detail-value-text {
+  margin-left: 0;
+  font-weight: 700;
+}
+
 .detail-list .detail-line {
   display: block;
   margin-left: 0;
+}
+
+.water-use-area-dialog .el-dialog__body {
+  padding-top: 8px;
+}
+
+.water-use-area-description {
+  margin: 0 0 16px;
+  color: #314054;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.water-use-area-map {
+  overflow: hidden;
+  border: 1px solid #d8e2ef;
+  border-radius: 8px;
+  background: #f4f9ff;
+}
+
+.water-use-area-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.water-use-area-map rect {
+  fill: #eef7ff;
+}
+
+.water-use-area-river {
+  fill: none;
+  stroke: #6cb6ff;
+  stroke-linecap: round;
+  stroke-width: 30;
+  opacity: 0.65;
+}
+
+.water-use-area-polygon {
+  fill: rgba(5, 189, 127, 0.32);
+  stroke: #05bd7f;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.water-use-area-point {
+  fill: #ffffff;
+  stroke: #05bd7f;
+  stroke-width: 4;
 }
 
 .crop-detail-list div {
@@ -838,6 +910,16 @@ h1 {
 
   .detail-list dd {
     font-size: 24px;
+  }
+
+  .detail-list .detail-action-value {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .water-use-area-button {
+    align-self: flex-end;
   }
 
   .crop-detail-list dt {
