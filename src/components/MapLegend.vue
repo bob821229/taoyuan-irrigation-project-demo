@@ -2,17 +2,11 @@
 import { computed, ref, watch } from 'vue'
 
 const emit = defineEmits(['update:filters'])
-const pondFilterKeys = ['pondHigh', 'pondMidHigh', 'pondMidLow', 'pondLow']
-const groupFilterKeys = ['harvest', 'paddy', 'seedling', 'tilling']
+const pondFilterKeys = ['pondHigh', 'pondMidLow', 'pondLow']
 const filters = ref({
   pondHigh: true,
-  pondMidHigh: true,
   pondMidLow: true,
   pondLow: true,
-  harvest: true,
-  paddy: true,
-  seedling: true,
-  tilling: true,
   canalFlow: true,
   pondStorage: true,
 })
@@ -27,14 +21,9 @@ const createGroupChecked = (keys) => computed({
 })
 
 const pondAllChecked = createGroupChecked(pondFilterKeys)
-const groupAllChecked = createGroupChecked(groupFilterKeys)
 const pondIndeterminate = computed(() => {
   const checkedCount = pondFilterKeys.filter((key) => filters.value[key]).length
   return checkedCount > 0 && checkedCount < pondFilterKeys.length
-})
-const groupIndeterminate = computed(() => {
-  const checkedCount = groupFilterKeys.filter((key) => filters.value[key]).length
-  return checkedCount > 0 && checkedCount < groupFilterKeys.length
 })
 
 watch(
@@ -71,6 +60,11 @@ watch(
       <span>河川區排</span>
     </div>
 
+    <div class="legend-row">
+      <span class="legend-swatch group-main" aria-hidden="true"></span>
+      <span>水利小組</span>
+    </div>
+
     <label class="legend-check legend-group-heading">
       <input
         v-model="pondAllChecked"
@@ -87,51 +81,14 @@ watch(
         <span>埤塘蓄水率&gt;75%</span>
       </label>
       <label class="legend-check legend-indent">
-        <input v-model="filters.pondMidHigh" type="checkbox">
-        <span class="legend-pill pond-mid-high" aria-hidden="true"></span>
-        <span>埤塘蓄水率50~75%</span>
-      </label>
-      <label class="legend-check legend-indent">
         <input v-model="filters.pondMidLow" type="checkbox">
         <span class="legend-pill pond-mid-low" aria-hidden="true"></span>
-        <span>埤塘蓄水率25~50%</span>
+        <span>埤塘蓄水率50~75%</span>
       </label>
       <label class="legend-check legend-indent">
         <input v-model="filters.pondLow" type="checkbox">
         <span class="legend-pill pond-low" aria-hidden="true"></span>
-        <span>埤塘蓄水率&lt;25%</span>
-      </label>
-    </div>
-
-    <label class="legend-check legend-group-heading">
-      <input
-        v-model="groupAllChecked"
-        type="checkbox"
-        :indeterminate="groupIndeterminate"
-      >
-      <span class="legend-swatch group-main" aria-hidden="true"></span>
-      <span>水利小組</span>
-    </label>
-    <div id="group-legend-details" class="legend-section">
-      <label class="legend-check legend-indent">
-        <input v-model="filters.harvest" type="checkbox">
-        <span class="legend-swatch harvest" aria-hidden="true"></span>
-        <span>收割期</span>
-      </label>
-      <label class="legend-check legend-indent">
-        <input v-model="filters.paddy" type="checkbox">
-        <span class="legend-swatch paddy" aria-hidden="true"></span>
-        <span>本田期</span>
-      </label>
-      <label class="legend-check legend-indent">
-        <input v-model="filters.seedling" type="checkbox">
-        <span class="legend-swatch seedling" aria-hidden="true"></span>
-        <span>抽穗期</span>
-      </label>
-      <label class="legend-check legend-indent">
-        <input v-model="filters.tilling" type="checkbox">
-        <span class="legend-swatch tilling" aria-hidden="true"></span>
-        <span>整田插秧期</span>
+        <span>埤塘蓄水率&lt;50%</span>
       </label>
     </div>
 
@@ -297,10 +254,6 @@ watch(
   background: #176f8d;
 }
 
-.pond-mid-high {
-  background: #00b050;
-}
-
 .pond-mid-low {
   background: #ffc000;
 }
@@ -318,22 +271,6 @@ watch(
 
 .group-main {
   background: #d9d9d9;
-}
-
-.harvest {
-  background: #a7f3c7;
-}
-
-.paddy {
-  background: #f4f1ff;
-}
-
-.seedling {
-  background: #fff6b8;
-}
-
-.tilling {
-  background: #ff8a8a;
 }
 
 @media (max-width: 720px) {

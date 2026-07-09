@@ -5,6 +5,7 @@ import irrigationSvg from '../../桃園管理處_湖口工作站_20260525_01_第
 import LayerNavigation from '../components/LayerNavigation.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
 import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
+import { featureFlags } from '../config/featureFlags'
 import { applySvgFlowEffects } from '../utils/svgFlowEffects'
 import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
@@ -18,16 +19,18 @@ const goToGuangfuLayer = () => {
 
 const handleMapClick = async (event) => {
   const target = event.target instanceof Element ? event.target : null
-  const clickedTarget = target?.closest(
-    '#branch__03009001_nav, #branch__03009001_info, #stn_03009001_info',
-  )
+  const clickedTarget = target?.closest('[id$="_nav"], [id$="_info"]')
 
   if (!clickedTarget) {
     return
   }
 
-  if (clickedTarget.id === 'branch__03009001_nav') {
+  if (clickedTarget.id === 'branch_03009001_nav' || clickedTarget.id === 'branch__03009001_nav') {
     goToGuangfuLayer()
+    return
+  }
+
+  if (clickedTarget.id.endsWith('_nav')) {
     return
   }
 
@@ -37,7 +40,9 @@ const handleMapClick = async (event) => {
 onMounted(async () => {
   await nextTick()
   applySvgInfoTooltips(irrigationMapRef.value)
-  applySvgFlowEffects(irrigationMapRef.value)
+  if (featureFlags.enableSvgFlowEffects) {
+    applySvgFlowEffects(irrigationMapRef.value)
+  }
 })
 </script>
 

@@ -81,32 +81,7 @@ export const thirdLayerCanalMonitorDetails = [
     flowUnit: 'cms',
   },
 ]
-//水利小組
-export const thirdLayerIrrigationGroupDetails = [
-  {
-    id: 'grp_03009001',
-    name: '光復圳1-1號池小組',
-    cropStage: '收割期',
-  },
-  {
-    id: 'grp_03009002',
-    name: '光復圳1-2號池小組',
-    cropStage: '本田期',
-  },
-  {
-    id: 'grp_03009003',
-    name: '光復圳1-3號池小組',
-    cropStage: '抽穗期',
-  },
-  {
-    id: 'grp_03009004',
-    name: '光復圳1-4號池小組',
-    cropStage: '整田插秧期',
-  },
-]
-
 export const thirdLayerMapDetails = {
   waterStorages: thirdLayerWaterStorageDetails,
   canalMonitors: thirdLayerCanalMonitorDetails,
-  irrigationGroups: thirdLayerIrrigationGroupDetails,
 }

@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { createSummaryItem, createSeasonLine, formatValue } from './tabFormatters'
 
 const props = defineProps({
   info: {
@@ -14,6 +13,32 @@ const expanded = ref(false)
 const crop = computed(() => props.info.crop ?? {})
 const years = computed(() => crop.value.years ?? [])
 const yearCount = computed(() => years.value.length)
+const agencyAverageNote = computed(() => crop.value.agencyAverageNote ?? '備註:不包含未申報公糧之面積')
+
+const formatCropValue = (value) => {
+  if (value === null || value === undefined || value === '') {
+    return '-'
+  }
+
+  if (typeof value === 'number') {
+    return new Intl.NumberFormat('zh-TW', {
+      maximumFractionDigits: 2,
+    }).format(value)
+  }
+
+  return value
+}
+
+const createCropSummaryItem = (label, value, unit) => ({
+  label,
+  value: formatCropValue(value),
+  unit,
+})
+
+const createCropSeasonLine = (label, value, prefix = '') => ({
+  value: `${prefix}${label} ${formatCropValue(value)}`,
+  unit: '公頃',
+})
 
 const seasonValues = (values) => {
   const paddedValues = Array.isArray(values) ? values.slice(0, yearCount.value) : []
@@ -22,28 +47,29 @@ const seasonValues = (values) => {
     paddedValues.push(null)
   }
 
-  return paddedValues.map(formatValue)
+  return paddedValues.map(formatCropValue)
 }
 
 const summary = computed(() => [
-  createSummaryItem('小組數：', crop.value.groupCount, '個'),
-  createSummaryItem(
-    `近期(${crop.value.floodedAreaDate})農地湛水面積：`,
+  createCropSummaryItem('小組數：', crop.value.groupCount, '個'),
+  createCropSummaryItem(
+    `近期(${formatCropValue(crop.value.floodedAreaDate)})農地湛水面積：`,
     crop.value.recentFloodedArea,
     '公頃',
   ),
   {
     label: '近5年農試所農地土地水稻平均面積：',
     lines: [
-      createSeasonLine('一期作', crop.value.researchAverage?.firstSeason),
-      createSeasonLine('二期作', crop.value.researchAverage?.secondSeason),
+      createCropSeasonLine('一期作', crop.value.researchAverage?.firstSeason),
+      createCropSeasonLine('二期作', crop.value.researchAverage?.secondSeason),
     ],
   },
   {
     label: '近5年農糧署水稻核定平均面積：',
+    note: `(${agencyAverageNote.value})`,
     lines: [
-      createSeasonLine('一期作', crop.value.agencyAverage?.firstSeason),
-      createSeasonLine('二期作', crop.value.agencyAverage?.secondSeason),
+      createCropSeasonLine('一期作', crop.value.agencyAverage?.firstSeason),
+      createCropSeasonLine('二期作', crop.value.agencyAverage?.secondSeason),
     ],
   },
 ])
@@ -51,7 +77,7 @@ const summary = computed(() => [
 const rows = computed(() => {
   return (crop.value.rows ?? []).map((row) => [
     row.name,
-    formatValue(row.floodedArea),
+    formatCropValue(row.floodedArea),
     ...seasonValues(row.researchFirstSeason),
     ...seasonValues(row.researchSecondSeason),
     ...seasonValues(row.agencyFirstSeason),
@@ -63,7 +89,10 @@ const rows = computed(() => {
 <template>
   <dl class="detail-list crop-detail-list">
     <div v-for="item in summary" :key="item.label">
-      <dt>{{ item.label }}</dt>
+      <dt>
+        <span>{{ item.label }}</span>
+        <span v-if="item.note" class="detail-line">{{ item.note }}</span>
+      </dt>
       <dd>
         <template v-if="item.lines">
           <span
@@ -118,7 +147,9 @@ const rows = computed(() => {
             <span class="table-header-line">(公頃)</span>
           </th>
           <th :colspan="yearCount * 2">近 5 年農試所農地土地水稻面積</th>
-          <th :colspan="yearCount * 2">近 5 年農糧署核定水稻面積</th>
+          <th :colspan="yearCount * 2">
+            近 5 年農糧署核定水稻面積({{ agencyAverageNote }})
+          </th>
         </tr>
         <tr>
           <th :colspan="yearCount">一期作</th>

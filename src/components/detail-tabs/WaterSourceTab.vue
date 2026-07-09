@@ -1,6 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue'
-import { createSummaryItem, formatValue } from './tabFormatters'
+import { computed } from 'vue'
 
 const props = defineProps({
   info: {
@@ -10,18 +9,26 @@ const props = defineProps({
 })
 
 const source = computed(() => props.info.waterSource ?? {})
-const expandedSections = reactive({
-  canal: false,
-  weir: false,
-  pond: false,
-})
-
-const canalSummarySource = computed(() => source.value.canalSummary ?? {})
-const weirSummarySource = computed(() => source.value.weirSummary ?? {})
+const intakeChannelSource = computed(() => source.value.intakeChannel ?? {})
 const pondSummarySource = computed(() => source.value.pondSummary ?? {})
 
-const canalRows = computed(() => canalSummarySource.value.row ?? [])
-const weirRows = computed(() => weirSummarySource.value.row ?? [])
+const hasValue = (value) => value !== null && value !== undefined && value !== ''
+
+const formatWaterSourceValue = (value) => {
+  if (!hasValue(value)) {
+    return '-'
+  }
+
+  if (typeof value === 'number') {
+    return new Intl.NumberFormat('zh-TW', {
+      maximumFractionDigits: 2,
+    }).format(value)
+  }
+
+  return value
+}
+
+const intakeChannelRows = computed(() => intakeChannelSource.value.row ?? intakeChannelSource.value.rows ?? [])
 
 const toPondRow = (pond, name) => ({
   name: pond.name ?? name,
@@ -32,105 +39,71 @@ const toPondRow = (pond, name) => ({
 })
 
 const pondRows = computed(() => {
-  return (pondSummarySource.value.row ?? []).map((row) => toPondRow(row, row.name))
+  return (pondSummarySource.value.row ?? pondSummarySource.value.rows ?? []).map((row) => toPondRow(row, row.name))
 })
 
-const hasWeir = computed(() => Number(weirSummarySource.value.count) > 0)
-const hasCanal = computed(() => Number(canalSummarySource.value.count) > 0)
-const hasPondSummaryCount = computed(() => (
-  pondSummarySource.value.count !== null
-  && pondSummarySource.value.count !== undefined
-  && Number(pondSummarySource.value.count) > 0
-))
-const hasPond = computed(() => hasPondSummaryCount.value || pondRows.value.length > 0)
+const toNumber = (value) => {
+  if (typeof value === 'number') {
+    return value
+  }
 
-const pondSummary = computed(() => [
-  createSummaryItem('埤塘數：', pondSummarySource.value.count, '口'),
-  createSummaryItem('最大蓄水量：', pondSummarySource.value.maxStorage, '萬噸'),
-  createSummaryItem('有效蓄水量：', pondSummarySource.value.effectiveStorage, '萬噸'),
-  createSummaryItem('蓄水率：', pondSummarySource.value.storageRate, '%'),
-])
+  if (typeof value === 'string' && value.trim() !== '' && !Number.isNaN(Number(value))) {
+    return Number(value)
+  }
+
+  return null
+}
+
+const sumPondColumn = (key) => {
+  const values = pondRows.value.map((row) => toNumber(row[key])).filter((value) => value !== null)
+
+  if (!values.length) {
+    return null
+  }
+
+  return values.reduce((total, value) => total + value, 0)
+}
+
+const pondSubtotal = computed(() => {
+  const maxStorage = sumPondColumn('maxStorage')
+  const effectiveStorage = sumPondColumn('effectiveStorage')
+  const storageRate = maxStorage && effectiveStorage !== null
+    ? (effectiveStorage / maxStorage) * 100
+    : null
+
+  return {
+    maxStorage,
+    effectiveStorage,
+    storageRate,
+  }
+})
+
+const hasIntakeChannel = computed(() => intakeChannelRows.value.length > 0)
+const hasPond = computed(() => pondRows.value.length > 0)
+const hasPondSubtotal = computed(() => {
+  return hasValue(pondSubtotal.value.maxStorage)
+    || hasValue(pondSubtotal.value.effectiveStorage)
+    || hasValue(pondSubtotal.value.storageRate)
+})
 </script>
 
 <template>
-  <section v-if="hasCanal" class="detail-section">
-    <h3>來自於渠道</h3>
-    <dl class="detail-list">
-      <div>
-        <dt>渠道數：</dt>
-        <dd>{{ canalSummarySource.count }}<span>個</span></dd>
-      </div>
-    </dl>
-    <div v-if="canalRows.length" class="detail-actions">
-      <el-button
-        class="expand-button"
-        circle
-        type="primary"
-        :aria-expanded="expandedSections.canal"
-        aria-label="展開渠道水源表格"
-        @click="expandedSections.canal = !expandedSections.canal"
-      >
-        {{ expandedSections.canal ? '-' : '+' }}
-      </el-button>
-    </div>
-    <div v-if="expandedSections.canal" class="detail-table-wrap">
+  <section v-if="hasIntakeChannel" class="detail-section">
+    <h3>引水渠道</h3>
+    <div class="detail-table-wrap water-source-table-wrap">
       <table class="detail-table">
         <thead>
           <tr>
             <th>序號</th>
-            <th>渠道名稱</th>
+            <th>類別</th>
+            <th>名稱</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, rowIndex) in canalRows" :key="rowIndex">
+          <tr v-for="(row, rowIndex) in intakeChannelRows" :key="rowIndex">
             <td>{{ rowIndex + 1 }}</td>
-            <td>{{ row.sourceName }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section v-if="hasWeir" class="detail-section">
-    <h3>來自於河水堰</h3>
-    <dl class="detail-list">
-      <div>
-        <dt>河水堰數：</dt>
-        <dd>{{ weirSummarySource.count }}<span>個</span></dd>
-      </div>
-    </dl>
-    <div v-if="weirRows.length" class="detail-actions">
-      <el-button
-        class="expand-button"
-        circle
-        type="primary"
-        :aria-expanded="expandedSections.weir"
-        aria-label="展開河水堰水源表格"
-        @click="expandedSections.weir = !expandedSections.weir"
-      >
-        {{ expandedSections.weir ? '-' : '+' }}
-      </el-button>
-    </div>
-    <div v-if="expandedSections.weir" class="detail-table-wrap">
-      <table class="detail-table">
-        <thead>
-          <tr>
-            <th>序號</th>
-            <th>河水堰名稱</th>
-            <th>取水方向</th>
-            <th>水系</th>
-            <th>支線</th>
-            <th>水源</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(row, rowIndex) in weirRows" :key="rowIndex">
-            <td>{{ rowIndex + 1 }}</td>
-            <td>{{ row.sourceName }}</td>
-            <td>{{ row.intakeDirection ?? '-' }}</td>
-            <td>{{ row.riverSystem ?? '-' }}</td>
-            <td>{{ row.branchLine ?? '-' }}</td>
-            <td>{{ row.waterSource ?? '-' }}</td>
+            <td>{{ formatWaterSourceValue(row.type) }}</td>
+            <td>{{ formatWaterSourceValue(row.name) }}</td>
           </tr>
         </tbody>
       </table>
@@ -138,30 +111,8 @@ const pondSummary = computed(() => [
   </section>
 
   <section v-if="hasPond" class="detail-section">
-    <h3>來自於埤塘</h3>
-    <dl class="detail-list">
-      <div v-for="item in pondSummary" :key="item.label">
-        <dt>{{ item.label }}</dt>
-        <dd>
-          {{ item.value }}
-          <span v-if="item.unit">{{ item.unit }}</span>
-        </dd>
-      </div>
-    </dl>
-    <div v-if="pondRows.length" class="detail-actions">
-      <el-button
-        class="expand-button"
-        circle
-        type="primary"
-        :aria-expanded="expandedSections.pond"
-        aria-label="展開埤塘水源表格"
-        @click="expandedSections.pond = !expandedSections.pond"
-      >
-        {{ expandedSections.pond ? '-' : '+' }}
-      </el-button>
-    </div>
-    <p v-else class="detail-empty">暫無埤塘資訊</p>
-    <div v-if="expandedSections.pond && pondRows.length" class="detail-table-wrap">
+    <h3>埤塘</h3>
+    <div class="detail-table-wrap water-source-table-wrap">
       <table class="detail-table">
         <thead>
           <tr>
@@ -176,16 +127,22 @@ const pondSummary = computed(() => [
         <tbody>
           <tr v-for="(row, rowIndex) in pondRows" :key="rowIndex">
             <td>{{ rowIndex + 1 }}</td>
-            <td>{{ row.name }}</td>
-            <td>{{ formatValue(row.time) }}</td>
-            <td>{{ formatValue(row.maxStorage) }}</td>
-            <td>{{ formatValue(row.effectiveStorage) }}</td>
-            <td>{{ formatValue(row.storageRate) }}</td>
+            <td>{{ formatWaterSourceValue(row.name) }}</td>
+            <td>{{ formatWaterSourceValue(row.time) }}</td>
+            <td>{{ formatWaterSourceValue(row.maxStorage) }}</td>
+            <td>{{ formatWaterSourceValue(row.effectiveStorage) }}</td>
+            <td>{{ formatWaterSourceValue(row.storageRate) }}</td>
+          </tr>
+          <tr v-if="hasPondSubtotal" class="water-source-subtotal-row">
+            <th colspan="3" scope="row">小計</th>
+            <td>{{ formatWaterSourceValue(pondSubtotal.maxStorage) }}</td>
+            <td>{{ formatWaterSourceValue(pondSubtotal.effectiveStorage) }}</td>
+            <td>{{ formatWaterSourceValue(pondSubtotal.storageRate) }}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <p v-if="!hasCanal && !hasWeir && !hasPond" class="detail-empty">暫無水源資訊</p>
+  <p v-if="!hasIntakeChannel && !hasPond" class="detail-empty">暫無水源資訊</p>
 </template>

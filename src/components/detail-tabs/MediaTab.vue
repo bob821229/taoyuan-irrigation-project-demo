@@ -17,6 +17,7 @@ const resolvePublicUrl = (url) => {
 }
 
 const images = computed(() => props.info.media?.images ?? [])
+const hasDescription = (description) => description !== null && description !== undefined && description !== ''
 </script>
 
 <template>
@@ -37,6 +38,9 @@ const images = computed(() => props.info.media?.images ?? [])
           <img v-if="image.url" :src="resolvePublicUrl(image.url)" :alt="image.title">
           <span v-else>影像待補</span>
         </div>
+        <figcaption v-if="hasDescription(image.description)" class="media-caption">
+          {{ image.description }}
+        </figcaption>
       </figure>
     </el-carousel-item>
   </el-carousel>

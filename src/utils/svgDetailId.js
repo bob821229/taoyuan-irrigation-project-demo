@@ -9,11 +9,10 @@ export const normalizeSvgDetailId = (rawSvgId) => {
     return null
   }
 
-  const rawId = rawSvgId
   const cleanId = rawSvgId.replace(DETAIL_SUFFIX_PATTERN, '')
-  const separator = cleanId.includes('__') ? '__' : '_'
-  const [rawType, ...idParts] = cleanId.split(separator)
-  const id = idParts.join(separator)
+  const normalizedCleanId = cleanId.replace(/__+/g, '_')
+  const [rawType, ...idParts] = normalizedCleanId.split('_')
+  const id = idParts.join('_')
 
   if (!rawType || !id) {
     return null
@@ -24,7 +23,7 @@ export const normalizeSvgDetailId = (rawSvgId) => {
   return {
     type,
     id,
-    rawId,
+    rawId: normalizedCleanId,
   }
 }
 

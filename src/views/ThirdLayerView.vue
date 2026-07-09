@@ -5,9 +5,9 @@ import LayerNavigation from '../components/LayerNavigation.vue'
 import MapLegend from '../components/MapLegend.vue'
 import StationDetailDialog from '../components/StationDetailDialog.vue'
 import { useSvgDetailDialog } from '../composables/useSvgDetailDialog'
+import { featureFlags } from '../config/featureFlags'
 import {
   thirdLayerCanalMonitorDetails,
-  thirdLayerIrrigationGroupDetails,
   thirdLayerWaterStorageDetails,
 } from '../data/thirdLayerMapDetails'
 import {
@@ -18,27 +18,15 @@ import { applySvgInfoTooltips } from '../utils/svgInfoTooltip'
 
 const defaultLegendFilters = {
   pondHigh: true,
-  pondMidHigh: true,
   pondMidLow: true,
   pondLow: true,
-  harvest: true,
-  paddy: true,
-  seedling: true,
-  tilling: true,
   canalFlow: true,
   pondStorage: true,
 }
 const pondLegendStyles = {
   pondHigh: '#176f8d',
-  pondMidHigh: '#00b050',
   pondMidLow: '#ffc000',
   pondLow: '#ff0000',
-}
-const cropStageLegendStyles = {
-  收割期: { filterKey: 'harvest', color: '#a7f3c7' },
-  本田期: { filterKey: 'paddy', color: '#f4f1ff' },
-  抽穗期: { filterKey: 'seedling', color: '#fff6b8' },
-  整田插秧期: { filterKey: 'tilling', color: '#ff8a8a' },
 }
 const irrigationMapRef = ref(null)
 const mapValueLabels = ref([])
@@ -59,10 +47,6 @@ const getPondLegendKey = (percent) => {
   }
 
   if (percent >= 50) {
-    return 'pondMidHigh'
-  }
-
-  if (percent >= 25) {
     return 'pondMidLow'
   }
 
@@ -157,15 +141,6 @@ const applyLegendStyles = () => {
 
     setElementFill(fillTarget, color)
   })
-
-  thirdLayerIrrigationGroupDetails.forEach((detail) => {
-    const stageStyle = cropStageLegendStyles[detail.cropStage]
-    const groupElement = mapElement.querySelector(`#${detail.id}`)
-    const fillTarget = groupElement?.querySelector('rect')
-    const color = stageStyle && legendFilters.value[stageStyle.filterKey] ? stageStyle.color : null
-
-    setElementFill(fillTarget, color)
-  })
 }
 
 const updateLegendFilters = async (filters) => {
@@ -193,10 +168,12 @@ const handleMapClick = async (event) => {
 onMounted(async () => {
   await nextTick()
   applySvgInfoTooltips(irrigationMapRef.value)
-  applySvgFlowEffects(irrigationMapRef.value, {
-    rules: defaultSvgFlowRules,
-    duration: '0.5s',
-  })
+  if (featureFlags.enableSvgFlowEffects) {
+    applySvgFlowEffects(irrigationMapRef.value, {
+      rules: defaultSvgFlowRules,
+      duration: '0.5s',
+    })
+  }
   applyLegendStyles()
   updateMapValueLabels()
   window.addEventListener('resize', updateMapValueLabels)
